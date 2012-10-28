@@ -58,5 +58,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         // add a new user
         $devGroup->addUser('zoz@example.com');
         $this->assertCount(3, $devGroup->getMembers());
+
+        // remove new user
+        $devGroup->removeUser('zoz@example.com');
+        $this->assertCount(2, $devGroup->getMembers());
     }
 }

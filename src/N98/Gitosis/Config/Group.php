@@ -58,6 +58,19 @@ class Group implements ElementInterface
     }
 
     /**
+     * @param string $username
+     * @return Group
+     */
+    public function removeUser($username)
+    {
+        if (($key = array_search($username, $this->members)) !== false) {
+            unset($this->members[$key]);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getDescription()

@@ -97,6 +97,20 @@ Add User to existing Group
 
   $  bin/n98-gitosis-admin group:user:add group username
 
+Remove User from existing Group
+"""""""""""""""""""""""""""""""
+
+.. code-block:: sh
+
+  $  bin/n98-gitosis-admin group:user:remove group username
+
+
+Remove a user from all groups
+"""""""""""""""""""""""""""""
+
+.. code-block:: sh
+
+  $ bin/n98-gitosis-admin user:remove username
 
 Web Interface
 -------------
