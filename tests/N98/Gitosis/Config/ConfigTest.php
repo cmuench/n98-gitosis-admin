@@ -51,6 +51,12 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar@example.com', $members[0]);
         $this->assertEquals('foo@example.com', $members[1]);
 
-        $reader->save();
+        // add a already existing member
+        $devGroup->addUser('foo@example.com');
+        $this->assertCount(2, $devGroup->getMembers());
+
+        // add a new user
+        $devGroup->addUser('zoz@example.com');
+        $this->assertCount(3, $devGroup->getMembers());
     }
 }

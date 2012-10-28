@@ -4,6 +4,7 @@ namespace N98\Gitosis\Config;
 
 use Zend\Config\Config as ZendConfig;
 use Zend\Config\Writer\Ini as Writer;
+use Gitter\Client as GitClient;
 
 class Config
 {
@@ -212,4 +213,32 @@ class Config
 
         return $config;
     }
+
+    /**
+     * @return string
+     */
+    public function getGitosisRoot()
+    {
+        return dirname($this->filename);
+    }
+
+    /**
+     * @return \Gitter\Repository
+     */
+    public function getGitRepository()
+    {
+        $client = new GitClient();
+        $repository = $client->getRepository($this->getGitosisRoot());
+
+        return $repository;
+    }
+
+    public function persist()
+    {
+        $this->getGitRepository()
+             ->add($this->filename)
+             ->commit('Updated config')
+             ->push();
+    }
+
 }

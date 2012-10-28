@@ -1,6 +1,53 @@
 {
-    "hash": "940847c1547ac1198ccab9b90a56435f",
+    "hash": "c0f0e9c2afad2dc025803c081ec3a7ab",
     "packages": [
+        {
+            "name": "klaussilveira/gitter",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klaussilveira/gitter",
+                "reference": "19ee8e25f0e3453b85a29f2fc3f860ec8bfe5aa1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/klaussilveira/gitter/zipball/19ee8e25f0e3453b85a29f2fc3f860ec8bfe5aa1",
+                "reference": "19ee8e25f0e3453b85a29f2fc3f860ec8bfe5aa1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "symfony/process": ">=2.1"
+            },
+            "require-dev": {
+                "symfony/filesystem": ">=2.1"
+            },
+            "time": "1350420392",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Gitter": "lib/"
+                }
+            },
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Klaus Silveira",
+                    "email": "klaussilveira@php.net",
+                    "homepage": "http://www.klaussilveira.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Gitter allows you to interact in an object oriented manner with Git repositories.",
+            "homepage": "https://github.com/klaussilveira/gitter",
+            "keywords": [
+                "git",
+                "vcs"
+            ]
+        },
         {
             "name": "symfony/console",
             "version": "dev-master",
@@ -93,6 +140,53 @@
                 }
             ],
             "description": "Symfony Finder Component",
+            "homepage": "http://symfony.com"
+        },
+        {
+            "name": "symfony/process",
+            "version": "v2.1.2",
+            "target-dir": "Symfony/Component/Process",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Process",
+                "reference": "v2.1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Process/zipball/v2.1.2",
+                "reference": "v2.1.2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2012-09-18 15:37:29",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Process": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
             "homepage": "http://symfony.com"
         },
         {
@@ -303,6 +397,7 @@
     "stability-flags": {
         "symfony/console": 20,
         "symfony/yaml": 20,
-        "symfony/finder": 20
+        "symfony/finder": 20,
+        "klaussilveira/gitter": 20
     }
 }

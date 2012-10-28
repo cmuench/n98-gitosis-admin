@@ -14,7 +14,8 @@
         "symfony/yaml": "dev-master",
         "symfony/finder": "dev-master",
         "zendframework/zend-text": "2.0.*",
-        "zendframework/zend-config": "2.0.*"
+        "zendframework/zend-config": "2.0.*",
+        "klaussilveira/gitter": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7"

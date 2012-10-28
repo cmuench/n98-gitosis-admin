@@ -46,6 +46,18 @@ class Group implements ElementInterface
     }
 
     /**
+     * @param string $username
+     * @return Group
+     */
+    public function addUser($username)
+    {
+        $this->members[] = $username;
+        $this->members = array_unique($this->members);
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getDescription()
