@@ -1,0 +1,26 @@
+{
+    "name": "n98/gitosis-admin",
+    "description": "Manage Tool for gitosis",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/console": "dev-master",
+        "symfony/yaml": "dev-master",
+        "symfony/finder": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7"
+    },
+    "autoload": {
+        "psr-0": {
+            "N98": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "Christian Münch",
+            "email": "c.muench@netz98.de"
+        }
+    ],
+    "bin": ["bin/n98-gitosis-admin"]
+}
