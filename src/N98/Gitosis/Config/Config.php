@@ -2,6 +2,9 @@
 
 namespace N98\Gitosis\Config;
 
+use Zend\Config\Config as ZendConfig;
+use Zend\Config\Writer\Ini as Writer;
+
 class Config
 {
     /**
@@ -36,7 +39,7 @@ class Config
             throw new \RuntimeException('Gitosis config "' . $this->filename . '" file does not exist.');
         }
 
-        $data = parse_ini_file($this->filename, true);
+        $data = parse_ini_file($this->filename, true, INI_SCANNER_RAW);
 
         foreach ($data as $sectionName => $sectionData) {
             if ($sectionName == 'gitosis') {
@@ -46,6 +49,10 @@ class Config
             }
 
             switch ($sectionType) {
+                case 'gitosis':
+                    $this->gitosis = new Gitosis($sectionTypeName, $sectionData);
+                    break;
+
                 case 'repo':
                     $this->repos[$sectionTypeName] = new Repository($sectionTypeName, $sectionData);
                     break;
@@ -122,5 +129,39 @@ class Config
             throw new \InvalidArgumentException('Repository does not exist');
         }
         return $this->repos[$name];
+    }
+
+    /**
+     * Save config
+     */
+    public function save()
+    {
+        $iniWriter = new Writer();
+        $iniWriter->setNestSeparator(null);
+        $iniString = $iniWriter->toString($this->buildData());
+        $iniString = str_replace('"', '', $iniString);
+        file_put_contents($this->filename, $iniString);
+    }
+
+    /**
+     * Build array for config file generation
+     *
+     * @return array
+     */
+    protected function buildData()
+    {
+        $config = new ZendConfig(array(), true);
+
+        $config->gitosis = $this->gitosis->toArray();
+
+        foreach ($this->getGroups() as $group) {
+            $config->{'group ' . $group->getName()} = $group->toArray();
+        }
+
+        foreach ($this->getRepositories() as $repository) {
+            $config->{'repo ' . $repository->getName()} = $repository->toArray();
+        }
+
+        return $config;
     }
 }

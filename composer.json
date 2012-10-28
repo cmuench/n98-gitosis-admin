@@ -2,11 +2,19 @@
     "name": "n98/gitosis-admin",
     "description": "Manage Tool for gitosis",
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.zendframework.com/"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "symfony/console": "dev-master",
         "symfony/yaml": "dev-master",
-        "symfony/finder": "dev-master"
+        "symfony/finder": "dev-master",
+        "zendframework/zend-text": "2.0.*",
+        "zendframework/zend-config": "2.0.*"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7"

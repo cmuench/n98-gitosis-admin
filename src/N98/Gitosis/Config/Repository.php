@@ -2,7 +2,7 @@
 
 namespace N98\Gitosis\Config;
 
-class Repository
+class Repository implements ElementInterface
 {
     /**
      * @var string
@@ -88,5 +88,28 @@ class Repository
     public function getGitweb()
     {
         return $this->gitweb;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        $data = array();
+
+        if (isset($this->owner)) {
+            $data['owner'] = $this->owner;
+        }
+        if (isset($this->description)) {
+            $data['description'] = $this->description;
+        }
+        if (isset($this->daemon)) {
+            $data['daemon'] = $this->daemon ? 'yes' : 'no';
+        }
+        if (isset($this->gitweb)) {
+            $data['gitweb'] = $this->gitweb ? 'yes' : 'no';
+        }
+
+        return $data;
     }
 }

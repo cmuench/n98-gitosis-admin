@@ -1,6 +1,6 @@
 <?php
 
-namespace N98\Gitosis\Admin\Cli\Command\Repository;
+namespace N98\Gitosis\Admin\Cli\Command\Group;
 
 use N98\Gitosis\Admin\Cli\Command\GitosisCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,29 +11,24 @@ class ListCommand extends GitosisCommand
 {
     protected function configure()
     {
-        $this->setName('repo:list')
-             ->setDescription('Lists all repositories');
+        $this->setName('group:list')
+             ->setDescription('Lists all user groups');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $table = new Table(
             array(
-                'columnWidths' => array(30, 20, 30),
+                'columnWidths' => array(30, 50),
                 'decorator' => 'ascii',
             )
         );
 
-        foreach ($this->getConfig()->getRepositories() as $repo) {
+        foreach ($this->getConfig()->getGroups() as $group) {
             $table->appendRow(
                 array(
-                    $repo->getName(),
-                    $repo->getOwner(),
-                    $repo->getDescription(),
+                    $group->getName(),
+                    implode(PHP_EOL, $group->getMembers())
                 )
             );
         }

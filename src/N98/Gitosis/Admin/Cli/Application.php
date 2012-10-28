@@ -29,6 +29,7 @@ class Application extends BaseApplication
         $this->config = $configLoader->toArray();
 
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Repository\ListCommand());
+        $this->add(new \N98\Gitosis\Admin\Cli\Command\Group\ListCommand());
     }
 
     /**

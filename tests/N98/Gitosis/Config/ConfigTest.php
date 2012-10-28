@@ -16,7 +16,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
          * Repositories
          */
         $repos = $reader->getRepositories();
-        $this->assertCount(2, $repos);
+        $this->assertCount(3, $repos); // 2 explicit declared and 1 implicit "gitosis-admin"
         $this->assertInternalType('array', $repos);
 
         $repo1 = $reader->getRepository('repo1');
@@ -50,7 +50,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $members = $devGroup->getMembers();
         $this->assertInternalType('array', $members);
         $this->assertCount(2, $members);
-        $this->assertEquals('foo@example.com', $members[0]);
-        $this->assertEquals('bar@example.com', $members[1]);
+        $this->assertEquals('bar@example.com', $members[0]);
+        $this->assertEquals('foo@example.com', $members[1]);
+
+        $reader->save();
     }
 }

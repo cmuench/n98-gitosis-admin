@@ -2,7 +2,7 @@
 
 namespace N98\Gitosis\Config;
 
-class Group
+class Group implements ElementInterface
 {
     /**
      * @var string
@@ -28,17 +28,20 @@ class Group
      * @param string $name
      * @param array $data
      */
-    public function __construct($name, array $data)
+    public function __construct($name, array $data = array())
     {
         $this->name = $name;
         if (isset($data['members'])) {
             $this->members = array_unique(explode(' ', $data['members']));
+            sort($this->members);
         }
         if (isset($data['readonly'])) {
             $this->readonly = array_unique(explode(' ', $data['readonly']));
+            sort($this->readonly);
         }
         if (isset($data['writable'])) {
             $this->writable = array_unique(explode(' ', $data['writable']));
+            sort($this->writable);
         }
     }
 
@@ -105,4 +108,27 @@ class Group
     {
         return $this->members;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        $data = array();
+
+        if (isset($this->members) && count($this->members) > 0) {
+            $data['members'] = implode(' ', $this->members);
+        }
+
+        if (isset($this->readonly) && count($this->readonly) > 0) {
+            $data['readonly'] = implode(' ', $this->readonly);
+        }
+
+        if (isset($this->writable) && count($this->writable) > 0) {
+            $data['writable'] = implode(' ', $this->writable);
+        }
+
+        return $data;
+    }
+
 }
