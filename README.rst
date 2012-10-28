@@ -44,6 +44,14 @@ List Groups
 
   $ bin/n98-gitosis-admin group:list
 
+Remove Group
+""""""""""""
+
+.. code-block:: sh
+
+  $ bin/n98-gitosis-admin group:remove name
+
+
 Web Interface
 -------------
 
