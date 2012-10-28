@@ -66,6 +66,20 @@ List Groups
 
   $ bin/n98-gitosis-admin group:list
 
+Add Group
+"""""""""
+
+.. code-block:: sh
+
+   $ bin/n98-gitosis-admin group:add name members [writable] [readonly]
+
+Example:
+
+.. code-block:: sh
+
+  # Adds the repo "foo" with members "bar, zoz and bla" with write access to "repo1" and read access to "repo2"
+  $ bin/n98-gitosis-admin group:add foo bar,zoz,bla repo1 repo2
+
 Remove Group
 """"""""""""
 

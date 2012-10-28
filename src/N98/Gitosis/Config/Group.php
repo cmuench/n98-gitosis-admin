@@ -32,15 +32,15 @@ class Group implements ElementInterface
     {
         $this->name = $name;
         if (isset($data['members'])) {
-            $this->members = array_unique(explode(' ', $data['members']));
+            $this->members = array_unique(explode(' ', trim($data['members'])));
             sort($this->members);
         }
         if (isset($data['readonly'])) {
-            $this->readonly = array_unique(explode(' ', $data['readonly']));
+            $this->readonly = array_unique(explode(' ', trim($data['readonly'])));
             sort($this->readonly);
         }
         if (isset($data['writable'])) {
-            $this->writable = array_unique(explode(' ', $data['writable']));
+            $this->writable = array_unique(explode(' ', trim($data['writable'])));
             sort($this->writable);
         }
     }
@@ -63,10 +63,13 @@ class Group implements ElementInterface
 
     /**
      * @param array $readonly
+     * @return Group
      */
     public function setReadonly($readonly)
     {
         $this->readonly = $readonly;
+
+        return $this;
     }
 
     /**
@@ -79,10 +82,13 @@ class Group implements ElementInterface
 
     /**
      * @param array $writable
+     * @return Group
      */
     public function setWritable($writable)
     {
         $this->writable = $writable;
+
+        return $this;
     }
 
     /**
@@ -95,10 +101,13 @@ class Group implements ElementInterface
 
     /**
      * @param array $members
+     * @return Group
      */
     public function setMembers($members)
     {
         $this->members = $members;
+
+        return $this;
     }
 
     /**

@@ -19,4 +19,19 @@ abstract class GitosisCommand extends Command
         $gitosisConfig = new GitosisConfig(rtrim($appConfig['gitosis']['root_directory'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'gitosis.conf');
         return $gitosisConfig;
     }
+
+    /**
+     * @param string $input
+     * @return array
+     */
+    protected function normalizeListInput($input)
+    {
+        $data = array();
+        $array = explode(',', $input);
+        foreach ($array as $row) {
+            $data[] = trim(str_replace(' ', '', $row));
+        }
+
+        return $data;
+    }
 }

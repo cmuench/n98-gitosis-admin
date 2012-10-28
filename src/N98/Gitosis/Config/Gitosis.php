@@ -30,10 +30,13 @@ class Gitosis implements ElementInterface
 
     /**
      * @param boolean $gitweb
+     * @return Gitosis
      */
     public function setGitweb($gitweb)
     {
         $this->gitweb = $gitweb;
+
+        return $this;
     }
 
     /**
@@ -46,10 +49,13 @@ class Gitosis implements ElementInterface
 
     /**
      * @param string $loglevel
+     * @return Gitosis
      */
     public function setLoglevel($loglevel)
     {
         $this->loglevel = $loglevel;
+
+        return $this;
     }
 
     /**

@@ -28,10 +28,10 @@ class AddCommand extends GitosisCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $repo = new ConfigRepository($input->getArgument('name'));
-        $repo->setOwner($input->getArgument('owner'));
-        $repo->setDescription($input->getArgument('description'));
-        $repo->setGitweb($input->getArgument('gitweb') == 'yes');
-        $repo->setDaemon($input->getArgument('daemon') == 'yes');
+        $repo->setOwner($input->getArgument('owner'))
+             ->setDescription($input->getArgument('description'))
+             ->setGitweb($input->getArgument('gitweb') == 'yes')
+             ->setDaemon($input->getArgument('daemon') == 'yes');
         $this->getConfig()
              ->addRepository($repo)
              ->save();

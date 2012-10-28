@@ -28,9 +28,10 @@ class Application extends BaseApplication
         $configLoader = new ConfigurationLoader();
         $this->config = $configLoader->toArray();
 
-        $this->add(new \N98\Gitosis\Admin\Cli\Command\Repository\ListCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Repository\AddCommand());
+        $this->add(new \N98\Gitosis\Admin\Cli\Command\Repository\ListCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Repository\RemoveCommand());
+        $this->add(new \N98\Gitosis\Admin\Cli\Command\Group\AddCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Group\ListCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Group\RemoveCommand());
     }
