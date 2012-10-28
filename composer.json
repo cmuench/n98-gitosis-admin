@@ -2,6 +2,8 @@
     "name": "n98/gitosis-admin",
     "description": "Manage Tool for gitosis",
     "license": "MIT",
+    "keywords": ["gitosis", "git", "repository", "manager"],
+    "homepage": "https://github.com/cmuench/n98-gitosis-admin",
     "repositories": [
         {
             "type": "composer",

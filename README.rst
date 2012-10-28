@@ -74,7 +74,7 @@ Add Group
 
 .. code-block:: sh
 
-   $ bin/n98-gitosis-admin group:add name members [writable] [readonly]
+  $ bin/n98-gitosis-admin group:add name members [writable] [readonly]
 
 Example:
 
