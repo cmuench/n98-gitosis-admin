@@ -54,11 +54,11 @@ class Config
                     break;
 
                 case 'repo':
-                    $this->repos[$sectionTypeName] = new Repository($sectionTypeName, $sectionData);
+                    $this->addRepository(new Repository($sectionTypeName, $sectionData));
                     break;
 
                 case 'group':
-                    $this->groups[$sectionTypeName] = new Group($sectionTypeName, $sectionData);
+                    $this->addGroup(new Group($sectionTypeName, $sectionData));
                     break;
 
                 default:
@@ -88,11 +88,35 @@ class Config
     }
 
     /**
+     * @param Group $group
+     * @return Config
+     */
+    public function addGroup(Group $group)
+    {
+        $this->repos[$group->getName()] = $group;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * @param string $groupName
+     * @return Config
+     */
+    public function removeGroup($groupName)
+    {
+        if (isset($this->groups[$groupName])) {
+            unset($this->groups[$groupName]);
+        }
+
+        return $this;
     }
 
     /**
@@ -107,6 +131,30 @@ class Config
             throw new \InvalidArgumentException('Group does not exist');
         }
         return $this->groups[$name];
+    }
+
+    /**
+     * @param Repository $repo
+     * @return Config
+     */
+    public function addRepository(Repository $repo)
+    {
+        $this->repos[$repo->getName()] = $repo;
+
+        return $this;
+    }
+
+    /**
+     * @param string $repoName
+     * @return Config
+     */
+    public function removeRepository($repoName)
+    {
+        if (isset($this->repos[$repoName])) {
+            unset($this->repos[$repoName]);
+        }
+
+        return $this;
     }
 
     /**

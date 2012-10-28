@@ -51,6 +51,46 @@ class Repository implements ElementInterface
     }
 
     /**
+     * @param boolean $daemon
+     */
+    public function setDaemon($daemon)
+    {
+        $this->daemon = $daemon;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @param boolean $gitweb
+     */
+    public function setGitweb($gitweb)
+    {
+        $this->gitweb = $gitweb;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param string $owner
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
      * @return string
      */
     public function getDescription()

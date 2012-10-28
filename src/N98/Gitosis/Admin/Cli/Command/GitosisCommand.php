@@ -8,7 +8,7 @@ use N98\Gitosis\Config\Config as GitosisConfig;
 abstract class GitosisCommand extends Command
 {
     /**
-     * @return Config
+     * @return GitosisConfig
      */
     protected function getConfig()
     {
