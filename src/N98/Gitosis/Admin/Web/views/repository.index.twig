@@ -1,0 +1,12 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <h1>Repository Index</h1>
+
+    <ul>
+    {% for repo in repositories %}
+        <li>{{ repo.name }}</li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}
