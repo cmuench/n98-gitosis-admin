@@ -38,6 +38,7 @@ class Application extends BaseApplication
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Group\UserRemoveCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Gitosis\PersistCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\User\RemoveCommand());
+        $this->add(new \N98\Gitosis\Admin\Cli\Command\User\ListCommand());
     }
 
     /**

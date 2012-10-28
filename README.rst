@@ -112,6 +112,15 @@ Remove a user from all groups
 
   $ bin/n98-gitosis-admin user:remove username
 
+List all existing users
+"""""""""""""""""""""""
+
+Lists all users across all groups.
+
+.. code-block:: sh
+
+  $  bin/n98-gitosis-admin user:list
+
 Web Interface
 -------------
 
