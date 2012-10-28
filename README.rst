@@ -4,6 +4,7 @@ Gitosis Administrator
 Manage gitosis over CLI- and Web-Interface.
 
 .. image:: https://secure.travis-ci.org/cmuench/n98-gitosis-admin.png
+  :target: https://secure.travis-ci.org/cmuench/n98-gitosis-admin
 
 Installation
 ------------
