@@ -125,3 +125,9 @@ Web Interface
 -------------
 
 Web Interface is coming.... First CLI interface must be finished.
+
+TODO
+----
+
+* Handle SSH keys
+* Web Frontend
