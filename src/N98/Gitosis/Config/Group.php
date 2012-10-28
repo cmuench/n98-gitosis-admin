@@ -106,12 +106,62 @@ class Group implements ElementInterface
     }
 
     /**
+     * @param string $readonly
+     * @return Group
+     */
+    public function addReadonly($readonly)
+    {
+        $this->readonly[] = $readonly;
+        $this->readonly = array_unique($this->readonly);
+
+        return $this;
+    }
+
+    /**
+     * @param string $readonly
+     * @return Group
+     */
+    public function removeReadonly($readonly)
+    {
+        if (($key = array_search($readonly, $this->readonly)) !== false) {
+            unset($this->readonly[$key]);
+        }
+
+        return $this;
+    }
+
+    /**
      * @param array $writable
      * @return Group
      */
     public function setWritable($writable)
     {
         $this->writable = $writable;
+
+        return $this;
+    }
+
+    /**
+     * @param string $writable
+     * @return Group
+     */
+    public function addWritable($writable)
+    {
+        $this->writable[] = $writable;
+        $this->writable = array_unique($this->writable);
+
+        return $this;
+    }
+
+    /**
+     * @param string $writable
+     * @return Group
+     */
+    public function removeWritable($writable)
+    {
+        if (($key = array_search($writable, $this->writable)) !== false) {
+            unset($this->writable[$key]);
+        }
 
         return $this;
     }

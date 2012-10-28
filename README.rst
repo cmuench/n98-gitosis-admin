@@ -121,6 +121,20 @@ Lists all users across all groups.
 
   $  bin/n98-gitosis-admin user:list
 
+Allow group write acccess to repository
+"""""""""""""""""""""""""""""""""""""""
+
+.. code-block:: sh
+
+  $ group:repo:add:writable
+
+Allow group readonly acccess to repository
+""""""""""""""""""""""""""""""""""""""""""
+
+.. code-block:: sh
+
+  $ group:repo:add:readonly
+
 Web Interface
 -------------
 

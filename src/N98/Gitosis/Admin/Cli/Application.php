@@ -36,6 +36,8 @@ class Application extends BaseApplication
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Group\RemoveCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Group\UserAddCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Group\UserRemoveCommand());
+        $this->add(new \N98\Gitosis\Admin\Cli\Command\Group\RepoAddWritableCommand());
+        $this->add(new \N98\Gitosis\Admin\Cli\Command\Group\RepoAddReadonlyCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Gitosis\PersistCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\User\RemoveCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\User\ListCommand());

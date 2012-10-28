@@ -51,6 +51,18 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar@example.com', $members[0]);
         $this->assertEquals('foo@example.com', $members[1]);
 
+        // Add and remove writable
+        $devGroup->addWritable('foo1234');
+        $this->assertCount(2, $devGroup->getWritable());
+        $devGroup->removeWritable('foo1234');
+        $this->assertCount(1, $devGroup->getWritable());
+
+        // Add and remove readonly
+        $devGroup->addReadonly('foo1234');
+        $this->assertCount(1, $devGroup->getReadonly());
+        $devGroup->removeReadonly('foo1234');
+        $this->assertCount(0, $devGroup->getReadonly());
+
         // add a already existing member
         $devGroup->addUser('foo@example.com');
         $this->assertCount(2, $devGroup->getMembers());
