@@ -1,6 +1,6 @@
 <?php
 
-namespace N98\Gitosis\Admin\Cli\Command\Repository;
+namespace N98\Gitosis\Admin\Cli\Command\Group;
 
 use N98\Gitosis\Admin\Cli\Command\GitosisCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,9 +11,9 @@ class RemoveCommand extends GitosisCommand
 {
     protected function configure()
     {
-        $this->setName('repo:remove')
-             ->addArgument('name', InputArgument::REQUIRED, 'Name of repository to delete')
-             ->setDescription('Removes an existing repository');
+        $this->setName('group:remove')
+             ->addArgument('name', InputArgument::REQUIRED, 'Name of group to delete')
+             ->setDescription('Removes an existing user group');
     }
 
     /**
@@ -23,7 +23,7 @@ class RemoveCommand extends GitosisCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getConfig()
-             ->removeRepository($input->getArgument('name'))
+             ->removeGroup($input->getArgument('name'))
              ->save();
     }
 

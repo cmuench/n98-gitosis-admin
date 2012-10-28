@@ -93,7 +93,7 @@ class Config
      */
     public function addGroup(Group $group)
     {
-        $this->repos[$group->getName()] = $group;
+        $this->groups[$group->getName()] = $group;
 
         return $this;
     }

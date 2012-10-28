@@ -32,6 +32,7 @@ class Application extends BaseApplication
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Repository\AddCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Repository\RemoveCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Group\ListCommand());
+        $this->add(new \N98\Gitosis\Admin\Cli\Command\Group\RemoveCommand());
     }
 
     /**
