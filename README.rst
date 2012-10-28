@@ -6,6 +6,28 @@ Manage gitosis over CLI- and Web-Interface.
 Installation
 ------------
 
+Download the composer.phar executable or use the installer.
+
+.. code-block:: sh
+
+   $ curl -s http://getcomposer.org/installer | php
+
+Install dependencies over composer.
+
+.. code-block:: sh
+
+  $ php ./composer.phar install
+
+Create **config.yaml** file from config.yaml.dist file.
+
+Add path to your gitosis config (Cloned gitosis-admin repository):
+
+.. code-block:: yaml
+
+   gitosis:
+     root_directory: /my-path/gitosis-admin
+
+
 CLI Interface
 -------------
 
