@@ -4,9 +4,12 @@ namespace N98\Gitosis\Admin\Web;
 
 use Silex\Application as SilexApplication;
 use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\UrlGeneratorServiceProvider;
 use N98\Gitosis\Admin\Web\ServiceProvider\GitosisConfigProvider;
 use N98\Gitosis\Admin\Web\ControllerProvider\IndexProvider;
 use N98\Gitosis\Admin\Web\ControllerProvider\RepositoryProvider;
+use N98\Gitosis\Admin\Web\ControllerProvider\GroupProvider;
+use N98\Gitosis\Admin\Web\ControllerProvider\UserProvider;
 
 class Application extends SilexApplication
 {
@@ -40,6 +43,11 @@ class Application extends SilexApplication
         ));
 
         /**
+         * URL generator
+         */
+        $this->register(new UrlGeneratorServiceProvider());
+
+        /**
          * Register gitosis config provider
          */
         $this->register(new GitosisConfigProvider());
@@ -49,5 +57,7 @@ class Application extends SilexApplication
          */
         $this->mount('/', new IndexProvider());
         $this->mount('/repository', new RepositoryProvider());
+        $this->mount('/groups', new GroupProvider());
+        $this->mount('/users', new UserProvider());
     }
 }

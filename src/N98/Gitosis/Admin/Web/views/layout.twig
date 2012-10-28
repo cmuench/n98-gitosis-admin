@@ -1,29 +1,35 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-
-    <style type="text/css">
-
-        body {
-            background: #eee;
-        }
-
-        #content {
-            background: #fff;
-            margin: 10px;
-            padding: 10px;
-        }
-    </style>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ app.request.BaseUrl }}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ app.request.BaseUrl }}/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <title>{{ title }}</title>
 </head>
-
 <body>
 
-<div id="content">
-{% block content %}
-{% endblock %}
+<div class="navbar">
+    <div class="navbar-inner">
+        <a class="brand" href="#">n98-gitosis-admin</a>
+        <ul class="nav">
+            <li><a href="{{ url('homepage') }}">Home</a></li>
+            <li><a href="{{ url('repositories') }}">Repositories</a></li>
+            <li><a href="{{ url('groups') }}">Groups</a></li>
+            <li><a href="{{ url('users') }}">Users</a></li>
+        </ul>
+    </div>
 </div>
 
-</body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
 
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="{{ app.request.BaseUrl }}/bootstrap/js/bootstrap.min.js"></script>
+</body>
 </html>

@@ -1,12 +1,12 @@
 {% extends "layout.twig" %}
 
 {% block content %}
-    <h2>Repositories</h2>
+    <h2>Groups</h2>
 
     <ul class="nav nav-tabs nav-stacked">
-    {% for repo in repositories %}
+    {% for group in groups %}
         <li>
-            <a href="">{{ repo.name }}</a>
+            <a href="">{{ group.name }}</a>
         </li>
     {% endfor %}
     </ul>

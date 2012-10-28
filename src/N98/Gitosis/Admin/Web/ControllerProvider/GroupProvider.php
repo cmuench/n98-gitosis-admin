@@ -5,7 +5,7 @@ namespace N98\Gitosis\Admin\Web\ControllerProvider;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 
-class IndexProvider implements ControllerProviderInterface
+class GroupProvider implements ControllerProviderInterface
 {
     public function connect(Application $app)
     {
@@ -13,9 +13,10 @@ class IndexProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers->get('/', function (Application $app) {
-            return $app['twig']->render('index.twig', array(
+            return $app['twig']->render('group.index.twig', array(
+                'groups' => $app['gitosis_config']->getGroups()
             ));
-        })->bind('homepage');
+        })->bind('groups');
 
         return $controllers;
     }

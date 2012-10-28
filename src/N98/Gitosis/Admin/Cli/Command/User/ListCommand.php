@@ -29,12 +29,7 @@ class ListCommand extends GitosisCommand
             )
         );
 
-        $users = array();
-        foreach ($this->getConfig()->getGroups() as $group) {
-            $users = array_merge($users, $group->getMembers());
-        }
-        $users = array_unique($users);
-        sort($users);
+        $users = $this->getConfig()->getUsers();
 
         foreach ($users as $user) {
             $table->appendRow(array($user));

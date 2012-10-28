@@ -16,7 +16,7 @@ class RepositoryProvider implements ControllerProviderInterface
             return $app['twig']->render('repository.index.twig', array(
                 'repositories' => $app['gitosis_config']->getRepositories()
             ));
-        });
+        })->bind('repositories');
 
         return $controllers;
     }

@@ -181,6 +181,26 @@ class Config
     }
 
     /**
+     * Returns a list of all users across all groups
+     *
+     * @return array
+     */
+    public function getUsers()
+    {
+        $users = array();
+        foreach ($this->getGroups() as $group) {
+            $users = array_merge($users, $group->getMembers());
+        }
+        $users = array_unique($users);
+        $users = array_filter($users, function($var) {
+            return substr($var, 0, 1) != '@';
+        });
+        sort($users);
+
+        return $users;
+    }
+
+    /**
      * Save config
      */
     public function save()
