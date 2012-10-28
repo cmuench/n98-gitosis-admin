@@ -126,14 +126,14 @@ Allow group write acccess to repository
 
 .. code-block:: sh
 
-  $ group:repo:add:writable
+  $ bin/n98-gitosis-admin group:repo:add:writable
 
 Allow group readonly acccess to repository
 """"""""""""""""""""""""""""""""""""""""""
 
 .. code-block:: sh
 
-  $ group:repo:add:readonly
+  $ bin/n98-gitosis-admin group:repo:add:readonly
 
 Web Interface
 -------------
