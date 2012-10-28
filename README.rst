@@ -90,6 +90,13 @@ Remove Group
 
   $ bin/n98-gitosis-admin group:remove name
 
+Add User to existing Group
+""""""""""""""""""""""""""
+
+.. code-block:: sh
+
+  $  bin/n98-gitosis-admin group:user:add group username
+
 
 Web Interface
 -------------
