@@ -1,7 +1,5 @@
 <?php
 
-namespace N98\Gitosis\Config;
-
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -10,7 +8,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     public function readFile()
     {
         $file = __DIR__ . '/../../../_files/gitosis.conf';
-        $reader = new Config($file);
+        $reader = new N98\Gitosis\Config\Config($file);
 
         /**
          * Repositories

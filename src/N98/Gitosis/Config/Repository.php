@@ -43,10 +43,10 @@ class Repository implements ElementInterface
             $this->description = $data['description'];
         }
         if (isset($data['gitweb'])) {
-            $this->gitweb = $data['gitweb'] == '1' ? true : false;
+            $this->gitweb = $data['gitweb'] == 'yes' ? true : false;
         }
         if (isset($data['daemon'])) {
-            $this->daemon = $data['daemon'] == '1' ? true : false;
+            $this->daemon = $data['daemon'] == 'yes' ? true : false;
         }
     }
 
