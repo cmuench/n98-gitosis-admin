@@ -5,6 +5,8 @@ namespace N98\Gitosis\Admin\Web;
 use Silex\Application as SilexApplication;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
+use Silex\Provider\FormServiceProvider;
+use Silex\Provider\TranslationServiceProvider;
 use N98\Gitosis\Admin\Web\ServiceProvider\GitosisConfigProvider;
 use N98\Gitosis\Admin\Web\ControllerProvider\IndexProvider;
 use N98\Gitosis\Admin\Web\ControllerProvider\RepositoryProvider;
@@ -34,12 +36,28 @@ class Application extends SilexApplication
      */
     protected function init()
     {
+        $this['debug'] = true;
+
         /**
          * Register twig
          */
         $twigService = new TwigServiceProvider();
         $this->register($twigService, array(
             'twig.path' => __DIR__ . '/views'
+        ));
+
+        /**
+         * Forms
+         */
+        $this->register(new FormServiceProvider());
+
+        /**
+         * Translations
+         */
+        $this->register(new TranslationServiceProvider(
+            array(
+                'locale_fallback' => 'en'
+            )
         ));
 
         /**
