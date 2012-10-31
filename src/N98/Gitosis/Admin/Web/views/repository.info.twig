@@ -24,4 +24,29 @@
         </tbody>
     </table>
 
+    <div class="well">
+        <h4>Access</h4>
+        <ul class="nav nav-list">
+            <li class="nav-header">Writable Groups</li>
+            {% for group in groups_write %}
+                <li><a href="#">{{ group.name }}</a></li>
+            {% endfor %}
+
+            <li class="nav-header">Readonly Groups</li>
+            {% for group in groups_readonly %}
+            <li><a href="#">{{ group.name }}</a></li>
+            {% endfor %}
+
+            <li class="nav-header">Write Users</li>
+            {% for user in users_write %}
+            <li><a href="#">{{ user }}</a></li>
+            {% endfor %}
+
+            <li class="nav-header">Readonly Users</li>
+            {% for user in users_readonly %}
+            <li><a href="#">{{ user }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
 {% endblock %}

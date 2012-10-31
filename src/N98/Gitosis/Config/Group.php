@@ -194,6 +194,24 @@ class Group implements ElementInterface
     }
 
     /**
+     * @param $repositoryName
+     * @return bool
+     */
+    public function hasWriteAccessToRepository($repositoryName)
+    {
+        return in_array($repositoryName, $this->writable);
+    }
+
+    /**
+     * @param $repositoryName
+     * @return bool
+     */
+    public function hasReadonlyAccessToRepository($repositoryName)
+    {
+        return in_array($repositoryName, $this->readonly);
+    }
+
+    /**
      * @return array
      */
     public function toArray()

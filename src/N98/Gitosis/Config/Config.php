@@ -201,6 +201,72 @@ class Config
     }
 
     /**
+     * Returns a list of users which can write
+     *
+     * @param string $
+     * @return array[Group]
+     */
+    public function getWritableGroupsByRepository($repositoryName)
+    {
+        $groups = array();
+        foreach ($this->groups as $group) { /* @var $group Group */
+            if ($group->hasWriteAccessToRepository($repositoryName)) {
+                $groups[] = $group;
+            }
+        }
+
+        return $groups;
+    }
+
+    /**
+     * Returns a list of users which can access repository readonly
+     *
+     * @param string $
+     * @return array[Group]
+     */
+    public function getReadonlyGroupsByRepository($repositoryName)
+    {
+        $groups = array();
+        foreach ($this->groups as $group) { /* @var $group Group */
+            if ($group->hasReadonlyAccessToRepository($repositoryName)) {
+                $groups[] = $group;
+            }
+        }
+
+        return $groups;
+    }
+
+    /**
+     * @param string $repositoryName
+     * @return array[string]
+     */
+    public function getWritableUsersByRepository($repositoryName)
+    {
+        $users = array();
+        $groups = $this->getWritableGroupsByRepository($repositoryName);
+        foreach ($groups as $group) { /* @var $group Group */
+            $users = array_merge($users, $group->getMembers());
+        }
+
+        return array_unique($users);
+    }
+
+    /**
+     * @param string $repositoryName
+     * @return array[string]
+     */
+    public function getReadonlyUsersByRepository($repositoryName)
+    {
+        $users = array();
+        $groups = $this->getReadonlyGroupsByRepository($repositoryName);
+        foreach ($groups as $group) { /* @var $group Group */
+            $users = array_merge($users, $group->getMembers());
+        }
+
+        return array_unique($users);
+    }
+
+    /**
      * Save config
      */
     public function save()

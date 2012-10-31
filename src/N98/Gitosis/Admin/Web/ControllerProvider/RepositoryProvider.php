@@ -60,8 +60,12 @@ class RepositoryProvider implements ControllerProviderInterface
             return $app['twig']->render(
                 'repository.info.twig',
                 array(
-                    'repository' => $app['gitosis_config']->getRepository($repo),
-                    'git'        => $app['gitosis_config']->getGitRepository($repo)
+                    'repository'      => $app['gitosis_config']->getRepository($repo),
+                    'git'             => $app['gitosis_config']->getGitRepository($repo),
+                    'groups_write'    => $app['gitosis_config']->getWritableGroupsByRepository($repo),
+                    'groups_readonly' => $app['gitosis_config']->getReadonlyGroupsByRepository($repo),
+                    'users_write'     => $app['gitosis_config']->getWritableUsersByRepository($repo),
+                    'users_readonly'  => $app['gitosis_config']->getReadonlyUsersByRepository($repo),
                 )
             );
         })->bind('repository_edit');
