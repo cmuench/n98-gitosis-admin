@@ -1,51 +1,57 @@
 {% extends "layout_page.twig" %}
 
 {% block content %}
-    <h2>Repository Info</h2>
+    <h2>Repository Info: {{ repository.name }}</h2>
 
     <table class="table table-bordered table-striped">
         <tbody>
             <tr>
-                <th>Name:</th>
-                <td>{{ repository.name }}</td>
-            </tr>
-            <tr>
                 <th>Owner:</th>
-                <td>{{ repository.owner }}</td>
+                <td>{% if repository.owner %}{{ repository.owner }}{% else %}-{% endif %}</td>
             </tr>
             <tr>
                 <th>Gitweb:</th>
-                <td>{{ repository.gitweb }}</td>
+                <td>{% if repository.gitweb %}<span class="badge badge-success">yes</span>{% else %}<span class="label">no</span>{% endif %}</td>
             </tr>
             <tr>
                 <th>Daemon:</th>
-                <td>{{ repository.daemon }}</td>
+                <td>{% if repository.daemon %}<span class="badge badge-success">yes</span>{% else %}<span class="label">no</span>{% endif %}</td>
             </tr>
         </tbody>
     </table>
 
+    <pre>git clone</pre>
+
     <div class="well">
         <h4>Access</h4>
         <ul class="nav nav-list">
-            <li class="nav-header">Writable Groups</li>
-            {% for group in groups_write %}
-                <li><a href="#">{{ group.name }}</a></li>
-            {% endfor %}
+            {% if groups_write %}
+                <li class="nav-header">Writable Groups</li>
+                {% for group in groups_write %}
+                    <li><a href="#"><i class="icon-list-alt"></i> {{ group.name }}</a></li>
+                {% endfor %}
+            {% endif %}
 
-            <li class="nav-header">Readonly Groups</li>
-            {% for group in groups_readonly %}
-            <li><a href="#">{{ group.name }}</a></li>
-            {% endfor %}
+            {% if groups_readonly %}
+                <li class="nav-header">Readonly Groups</li>
+                {% for group in groups_readonly %}
+                <li><a href="#"><i class="icon-list-alt"></i> {{ group.name }}</a></li>
+                {% endfor %}
+            {% endif %}
 
-            <li class="nav-header">Write Users</li>
-            {% for user in users_write %}
-            <li><a href="#">{{ user }}</a></li>
-            {% endfor %}
+            {% if users_write %}
+                <li class="nav-header">Write Users</li>
+                {% for user in users_write %}
+                <li><a href="#"><i class="icon-user"></i> {{ user }}</a></li>
+                {% endfor %}
+            {% endif %}
 
-            <li class="nav-header">Readonly Users</li>
-            {% for user in users_readonly %}
-            <li><a href="#">{{ user }}</a></li>
-            {% endfor %}
+            {% if users_readonly %}
+                <li class="nav-header">Readonly Users</li>
+                {% for user in users_readonly %}
+                <li><a href="#"><i class="icon-user"></i> {{ user }}</a></li>
+                {% endfor %}
+            {% endif %}
         </ul>
     </div>
 
