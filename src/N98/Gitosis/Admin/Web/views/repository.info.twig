@@ -1,0 +1,27 @@
+{% extends "layout_page.twig" %}
+
+{% block content %}
+    <h2>Repository Info</h2>
+
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Name:</th>
+                <td>{{ repository.name }}</td>
+            </tr>
+            <tr>
+                <th>Owner:</th>
+                <td>{{ repository.owner }}</td>
+            </tr>
+            <tr>
+                <th>Gitweb:</th>
+                <td>{{ repository.gitweb }}</td>
+            </tr>
+            <tr>
+                <th>Daemon:</th>
+                <td>{{ repository.daemon }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

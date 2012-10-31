@@ -48,6 +48,24 @@ class RepositoryProvider implements ControllerProviderInterface
             return $app['twig']->render('repository.edit.twig', array('form' => $form->createView()));
         })->bind('repository_edit');
 
+        /**
+         * Repository info
+         */
+        $controllers->match('/info/{repo}', function(Application $app, Request $request, $repo) {
+
+            $data = array(
+            );
+
+            // display the form
+            return $app['twig']->render(
+                'repository.info.twig',
+                array(
+                    'repository' => $app['gitosis_config']->getRepository($repo),
+                    'git'        => $app['gitosis_config']->getGitRepository($repo)
+                )
+            );
+        })->bind('repository_edit');
+
         return $controllers;
     }
 }
