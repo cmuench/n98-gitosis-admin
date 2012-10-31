@@ -4,9 +4,9 @@ namespace N98\Gitosis\Admin\Web\ServiceProvider;
 
 use Silex\ServiceProviderInterface;
 use Silex\Application;
-use N98\Gitosis\Config\Config as GitosisConfig;
+use N98\Gitosis\Admin\ConfigurationLoader;
 
-class GitosisConfigProvider implements ServiceProviderInterface
+class AppConfigProvider implements ServiceProviderInterface
 {
     /**
      * Registers services on the given app.
@@ -18,11 +18,8 @@ class GitosisConfigProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        if (!is_dir($app['config']->getGitosisAdminRootDirectory())) {
-            throw new \RuntimeException('Gitosis root directory does not exist');
-        }
-
-        $app['gitosis_config'] = new GitosisConfig(rtrim($app['config']->getGitosisAdminRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'gitosis.conf');
+        $configLoader = new ConfigurationLoader();
+        $app['config'] = $configLoader;
     }
 
     /**

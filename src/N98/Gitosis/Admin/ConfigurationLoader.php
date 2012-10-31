@@ -18,10 +18,35 @@ class ConfigurationLoader
     }
 
     /**
+     * @return string
+     */
+    public function getGitosisSshHost()
+    {
+        return $this->configArray['gitosis']['ssh_host'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getGitosisSshUser()
+    {
+        return $this->configArray['gitosis']['ssh_user'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getGitosisAdminRootDirectory()
+    {
+        return $this->configArray['gitosis']['root_directory'];
+    }
+
+    /**
      * @return array
      */
     public function toArray()
     {
         return $this->configArray;
     }
+
 }

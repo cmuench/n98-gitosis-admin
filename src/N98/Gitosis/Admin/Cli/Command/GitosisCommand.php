@@ -19,10 +19,10 @@ abstract class GitosisCommand extends Command
     {
         if ($this->config === null) {
             $appConfig = $this->getApplication()->getConfig();
-            if (!is_dir($appConfig['gitosis']['root_directory'])) {
+            if (!is_dir($appConfig->getGitosisAdminRootDirectory())) {
                 throw new \RuntimeException('Gitosis root directory does not exist');
             }
-            $this->config = new GitosisConfig(rtrim($appConfig['gitosis']['root_directory'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'gitosis.conf');
+            $this->config = new GitosisConfig(rtrim($appConfig->getGitosisAdminRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'gitosis.conf');
         }
 
         return $this->config;

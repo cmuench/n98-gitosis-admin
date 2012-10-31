@@ -23,7 +23,7 @@ class RepositoryProvider implements ControllerProviderInterface
         })->bind('repository_list');
 
         /**
-         * Edit repository
+         * Edit
          */
         $controllers->match('/edit/{repo}', function(Application $app, Request $request, $repo) {
 
@@ -45,20 +45,20 @@ class RepositoryProvider implements ControllerProviderInterface
             }
 
             // display the form
-            return $app['twig']->render('repository.edit.twig', array('form' => $form->createView()));
+            return $app['twig']->render('repository.edit.twig', array('repo' => $repo, 'form' => $form->createView()));
         })->bind('repository_edit');
 
         /**
-         * Repository info
+         * View
          */
-        $controllers->match('/info/{repo}', function(Application $app, Request $request, $repo) {
+        $controllers->match('/view/{repo}', function(Application $app, Request $request, $repo) {
 
             $data = array(
             );
 
             // display the form
             return $app['twig']->render(
-                'repository.info.twig',
+                'repository.view.twig',
                 array(
                     'repository'      => $app['gitosis_config']->getRepository($repo),
                     'git'             => $app['gitosis_config']->getGitRepository($repo),
@@ -68,7 +68,7 @@ class RepositoryProvider implements ControllerProviderInterface
                     'users_readonly'  => $app['gitosis_config']->getReadonlyUsersByRepository($repo),
                 )
             );
-        })->bind('repository_edit');
+        })->bind('repository_view');
 
         return $controllers;
     }

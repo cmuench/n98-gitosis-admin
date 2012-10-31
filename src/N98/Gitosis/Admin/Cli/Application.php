@@ -25,8 +25,7 @@ class Application extends BaseApplication
     public function __construct()
     {
         parent::__construct(self::APP_NAME, self::APP_VERSION);
-        $configLoader = new ConfigurationLoader();
-        $this->config = $configLoader->toArray();
+        $this->config = new ConfigurationLoader();
 
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Repository\AddCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Repository\ListCommand());
@@ -44,7 +43,7 @@ class Application extends BaseApplication
     }
 
     /**
-     * @return array
+     * @return ConfigurationLoader
      */
     public function getConfig()
     {

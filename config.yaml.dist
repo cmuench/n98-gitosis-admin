@@ -1,2 +1,4 @@
 gitosis:
-  root_directory:
+  root_directory: /path/to/gitosis-admin
+  ssh_user: git
+  ssh_host: myhost

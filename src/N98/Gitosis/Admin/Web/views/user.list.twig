@@ -6,7 +6,7 @@
     <ul class="nav nav-tabs nav-stacked">
     {% for user in users %}
         <li>
-            <a href=""><i class="icon-black icon-user"></i>  {{ user }}</a>
+            <a href="{{ url('user_view', {user:user}) }}"><i class="icon-black icon-user"></i>  {{ user }}</a>
         </li>
     {% endfor %}
     </ul>

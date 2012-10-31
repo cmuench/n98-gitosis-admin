@@ -1,7 +1,7 @@
 {% extends "layout_page.twig" %}
 
 {% block content %}
-    <h2>Repository Info: {{ repository.name }}</h2>
+    <h2>Repository: {{ repository.name }}</h2>
 
     <table class="table table-bordered table-striped">
         <tbody>
@@ -17,10 +17,12 @@
                 <th>Daemon:</th>
                 <td>{% if repository.daemon %}<span class="badge badge-success">yes</span>{% else %}<span class="label">no</span>{% endif %}</td>
             </tr>
+            <tr>
+                <th>Clone Command:</th>
+                <td>git clone {{ app.config.gitosisSshUser }}@{{ app.config.gitosisSshHost }}:{{ repository.name }}.git</td>
+            </tr>
         </tbody>
     </table>
-
-    <pre>git clone</pre>
 
     <div class="well">
         <h4>Access</h4>
@@ -42,7 +44,7 @@
             {% if users_write %}
                 <li class="nav-header">Write Users</li>
                 {% for user in users_write %}
-                <li><a href="#"><i class="icon-user"></i> {{ user }}</a></li>
+                <li><a href="{{ url('user_view', {user:user}) }}"><i class="icon-user"></i> {{ user }}</a></li>
                 {% endfor %}
             {% endif %}
 

@@ -6,7 +6,7 @@
     <ul class="nav nav-tabs nav-stacked">
     {% for group in groups %}
         <li>
-            <a href=""><i class="icon-black icon-list-alt"></i> {{ group.name }}</a>
+            <a href="{{ url('group_view', { group: group.name }) }}"><i class="icon-black icon-list-alt"></i> {{ group.name }}</a>
         </li>
     {% endfor %}
     </ul>

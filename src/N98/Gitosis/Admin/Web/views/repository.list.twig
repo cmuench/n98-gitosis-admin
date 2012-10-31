@@ -17,10 +17,10 @@
             {% for repo in repositories %}
             <tr>
                 <td>
-                    <i class="icon-black icon-book"></i> {{ repo.name }}
+                    <a href="{{ url('repository_view', { repo: repo.name }) }}"><i class="icon-black icon-book"></i> {{ repo.name }}</a>
                 </td>
                 <td>
-                    <a href="{{ url('repository_edit', { repo: repo.name }) }}"><i class="icon-black icon-info-sign"></i> Info</a>
+                    <a href="{{ url('repository_view', { repo: repo.name }) }}"><i class="icon-black icon-info-sign"></i> Info</a>
                 </td>
                 <td>
                     <a href="#"><i class="icon-black icon-trash"></i> Delete</a>

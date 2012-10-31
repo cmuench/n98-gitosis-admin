@@ -7,6 +7,7 @@ use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
+use N98\Gitosis\Admin\Web\ServiceProvider\AppConfigProvider;
 use N98\Gitosis\Admin\Web\ServiceProvider\GitosisConfigProvider;
 use N98\Gitosis\Admin\Web\ControllerProvider\IndexProvider;
 use N98\Gitosis\Admin\Web\ControllerProvider\RepositoryProvider;
@@ -15,11 +16,6 @@ use N98\Gitosis\Admin\Web\ControllerProvider\UserProvider;
 
 class Application extends SilexApplication
 {
-    /**
-     * @var array
-     */
-    protected $config;
-
     /**
      * Constructor.
      */
@@ -37,6 +33,11 @@ class Application extends SilexApplication
     protected function init()
     {
         $this['debug'] = true;
+
+        /**
+         * Register app config provider
+         */
+        $this->register(new AppConfigProvider());
 
         /**
          * Register twig
@@ -75,7 +76,7 @@ class Application extends SilexApplication
          */
         $this->mount('/', new IndexProvider());
         $this->mount('/repository', new RepositoryProvider());
-        $this->mount('/groups', new GroupProvider());
-        $this->mount('/users', new UserProvider());
+        $this->mount('/group', new GroupProvider());
+        $this->mount('/user', new UserProvider());
     }
 }
