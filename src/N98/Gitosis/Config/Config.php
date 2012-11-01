@@ -5,6 +5,7 @@ namespace N98\Gitosis\Config;
 use Zend\Config\Config as ZendConfig;
 use Zend\Config\Writer\Ini as Writer;
 use Gitter\Client as GitClient;
+use Symfony\Component\Finder\Finder;
 
 class Config
 {
@@ -200,9 +201,67 @@ class Config
         $users = array_filter($users, function($var) {
             return substr($var, 0, 1) != '@';
         });
+
+        /**
+         * Load ssh keys. A user must not be assigned to a user group
+         */
+        $sshKeyList = $this->getSshKeyList();
+        $sshKeyList = array_map(function($value) {
+            return substr($value, 0, -4);
+        }, $sshKeyList);
+        $users = array_unique(array_merge($users, $sshKeyList));
+
         sort($users);
 
         return $users;
+    }
+
+    /**
+     * List of key basenames
+     *
+     * @return array[string]
+     */
+    public function getSshKeyList()
+    {
+        $finder = new Finder();
+        $finder->files()
+               ->in($this->getGitosisKeyDir())
+               ->name('*.pub')
+               ->size('> 0')
+               ->sortByName();
+
+        $files = array();
+        foreach ($finder as $file) {
+            $files[] = $file->getFilename();
+        }
+
+        return $files;
+    }
+
+    /**
+     * @param string $username
+     * @param bool $removeKey
+     * @throws \RuntimeException
+     * @return Config
+     */
+    public function removeUser($username, $removeKey = true)
+    {
+        if ($removeKey) {
+            if ($this->sshKeyExists($username)) {
+                $keyFile = $this->getSshKeyFilename($username);
+                if (is_writable($keyFile)) {
+                    unlink($keyFile);
+                } else {
+                    throw new \RuntimeException('Key file cannot be removed. No write access');
+                }
+            }
+        }
+
+        foreach ($this->groups as $group) { /* @var $group Group */
+            $group->removeUser($username);
+        }
+
+        return $this;
     }
 
     /**
@@ -327,6 +386,31 @@ class Config
         $repository = $client->getRepository($this->getGitosisRoot());
 
         return $repository;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGitosisKeyDir()
+    {
+        return $this->getGitosisRoot() . DIRECTORY_SEPARATOR . 'keydir';
+    }
+
+    /**
+     * @param string $username
+     */
+    public function sshKeyExists($username)
+    {
+        return file_exists($this->getSshKeyFilename($username));
+    }
+
+    /**
+     * @param string $username
+     * @return string
+     */
+    public function getSshKeyFilename($username)
+    {
+        return $this->getGitosisKeyDir() . DIRECTORY_SEPARATOR . $username . '.pub';
     }
 
     public function persist()

@@ -215,7 +215,7 @@ class Group implements ElementInterface
      * Removes readonly and writeable access to a repository
      *
      * @param string $repositoryName
-     * @return Group
+     * @return Grpoui
      */
     public function removeRepositoryAccess($repositoryName)
     {

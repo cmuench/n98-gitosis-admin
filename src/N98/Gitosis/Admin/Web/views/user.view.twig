@@ -3,4 +3,25 @@
 {% block content %}
     <h2>User: {{ user }}</h2>
 
+    <div class="btn-toolbar pull-right">
+        <div class="btn-group">
+            <a href="#delete_user_dialog" class="btn" role="button" data-toggle="modal"><i class="icon-trash"></i> Delete</a>
+        </div>
+    </div>
+
+    <!-- Delete user dialog -->
+    <div id="delete_user_dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="deleteUserDialog" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="deleteUserDialog">Delete User</h3>
+        </div>
+        <div class="modal-body">
+            <p>Do you really want to delete the user: <strong>{{ user }}</strong>?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <a href="{{ url('user_delete', { user: user}) }}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+
 {% endblock %}

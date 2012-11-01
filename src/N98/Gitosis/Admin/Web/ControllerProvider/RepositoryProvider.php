@@ -30,12 +30,14 @@ class RepositoryProvider implements ControllerProviderInterface
 
             $form = $app['form.factory']->createBuilder('form', $data)
                 ->add('name', 'text', array(
+                    'trim' => true,
                     'constraints' => array(
                         new Assert\NotBlank(),
                         new Assert\Regex(array('pattern' => '/^[a-zA-Z0-9-_]+$/')),
                     )
                 ))
                 ->add('owner', 'text', array(
+                    'trim' => true,
                     'constraints' => array(
                         new Assert\NotBlank()
                     )
@@ -64,7 +66,6 @@ class RepositoryProvider implements ControllerProviderInterface
                 }
             }
 
-            // display the form
             return $app['twig']->render('repository.create.twig', array('form' => $form->createView()));
 
         })->bind('repository_create');
@@ -73,6 +74,45 @@ class RepositoryProvider implements ControllerProviderInterface
          * Edit
          */
         $controllers->match('/edit/{repo}', function(Application $app, Request $request, $repo) {
+
+            $repository = $app['gitosis_config']->getRepository($repo);
+            $data = array(
+                'owner' => $repository->getOwner(),
+                'daemon' => $repository->getDaemon(),
+                'gitweb' => $repository->getGitweb(),
+            );
+
+            $form = $app['form.factory']->createBuilder('form', $data)
+                ->add('owner', 'text', array(
+                    'constraints' => array(
+                        new Assert\NotBlank()
+                    )
+                ))
+                ->add('gitweb', 'checkbox', array(
+                    'required' => false
+                ))
+                ->add('daemon', 'checkbox', array(
+                    'required' => false
+                ))
+                ->getForm();
+
+            if ('POST' == $request->getMethod()) {
+                $form->bind($request);
+
+                if ($form->isValid()) {
+                    $data = $form->getData();
+
+                    $repository->setOwner($data['owner']);
+                    $repository->setDaemon($data['daemon']);
+                    $repository->setGitweb($data['gitweb']);
+                    $app['gitosis_config']->save();
+
+                    return $app->redirect($app['url_generator']->generate('repository_list'));
+                }
+            }
+
+            // display the form
+            return $app['twig']->render('repository.create.twig', array('form' => $form->createView()));
 
         })->bind('repository_edit');
 

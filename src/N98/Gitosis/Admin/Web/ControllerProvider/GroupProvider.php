@@ -2,8 +2,11 @@
 
 namespace N98\Gitosis\Admin\Web\ControllerProvider;
 
+use N98\Gitosis\Config\Group as GitosisGroup;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class GroupProvider implements ControllerProviderInterface
 {
@@ -31,9 +34,43 @@ class GroupProvider implements ControllerProviderInterface
         })->bind('group_view');
 
         /**
+         * Add users
+         */
+        $controllers->get('/{group}/add-user', function(Application $app, $group) {
+
+        })->bind('group_add_user');
+
+        /**
          * Create
          */
-        $controllers->get('/create', function (Application $app) {
+        $controllers->match('/create', function (Application $app, Request $request) {
+
+            $data = array();
+
+            $form = $app['form.factory']->createBuilder('form', $data)
+                ->add('name', 'text', array(
+                    'constraints' => array(
+                        new Assert\NotBlank(),
+                        new Assert\Regex(array('pattern' => '/^[a-zA-Z0-9-_]+$/')),
+                    )
+                ))
+                ->getForm();
+
+            if ('POST' == $request->getMethod()) {
+                $form->bind($request);
+
+                if ($form->isValid()) {
+                    $data = $form->getData();
+
+                    $group = new GitosisGroup($data['name']);
+                    $app['gitosis_config']->addGroup($group)->save();
+
+                    return $app->redirect($app['url_generator']->generate('group_view', array('group' => $data['name'])));
+                }
+            }
+
+            return $app['twig']->render('group.create.twig', array('form' => $form->createView()));
+
         })->bind('group_create');
 
         /**

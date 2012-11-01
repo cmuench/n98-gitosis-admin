@@ -12,6 +12,7 @@
         </div>
     </div>
 
+    {% if groups %}
     <ul class="nav nav-tabs nav-stacked">
     {% for group in groups %}
         <li>
@@ -19,5 +20,8 @@
         </li>
     {% endfor %}
     </ul>
+    {% else %}
+        <span class="label label-warning">No users are currently assigned</span>
+    {% endif %}
 
 {% endblock %}

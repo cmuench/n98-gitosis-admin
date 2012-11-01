@@ -3,7 +3,6 @@
 namespace N98\Gitosis\Admin\Cli\Command\Group;
 
 use N98\Gitosis\Admin\Cli\Command\GitosisCommand;
-use N98\Gitosis\Config\Group as ConfigGroup;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;

@@ -3,10 +3,23 @@
 {% block content %}
     <h2>Users</h2>
 
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            <a class="btn btn-toolbar" href="{{ url('user_create') }}">
+                <i class="icon-plus-sign"></i>
+                Create User
+            </a>
+        </div>
+    </div>
+
     <ul class="nav nav-tabs nav-stacked">
     {% for user in users %}
         <li>
-            <a href="{{ url('user_view', {user:user}) }}"><i class="icon-black icon-user"></i>  {{ user }}</a>
+            <a href="{{ url('user_view', {user:user}) }}"><i class="icon-black icon-user"></i>  {{ user }}
+                {% if user not in ssh_key_exists %}
+                    <span class="label label-important">Public Key is missing</span>
+                {% endif %}
+            </a
         </li>
     {% endfor %}
     </ul>

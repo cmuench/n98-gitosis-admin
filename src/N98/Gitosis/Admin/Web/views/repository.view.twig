@@ -33,6 +33,7 @@
 
     <div class="well">
         <h4>Access</h4>
+        {% if groups_write or groups_readonly or users_write or users_readonly %}
         <ul class="nav nav-list">
             {% if groups_write %}
                 <li class="nav-header">Writable Groups</li>
@@ -62,6 +63,9 @@
                 {% endfor %}
             {% endif %}
         </ul>
+        {% else %}
+            <span class="label label-warning">No access rules defined</span>
+        {% endif %}
     </div>
 
     <!-- Delete repository dialog -->

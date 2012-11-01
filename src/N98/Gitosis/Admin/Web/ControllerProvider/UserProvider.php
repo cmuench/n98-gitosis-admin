@@ -4,6 +4,8 @@ namespace N98\Gitosis\Admin\Web\ControllerProvider;
 
 use Silex\Application;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class UserProvider implements ControllerProviderInterface
 {
@@ -16,8 +18,17 @@ class UserProvider implements ControllerProviderInterface
          * List
          */
         $controllers->get('/', function (Application $app) {
+            $sshKeyExistArray = array();
+            $users = $app['gitosis_config']->getUsers();
+            foreach ($users as $user) {
+                if ($app['gitosis_config']->sshKeyExists($user)) {
+                    $sshKeyExistArray[] = $user;
+                }
+            }
+
             return $app['twig']->render('user.list.twig', array(
-                'users' => $app['gitosis_config']->getUsers()
+                'users' => $users,
+                'ssh_key_exists' => $sshKeyExistArray
             ));
         })->bind('user_list');
 
@@ -29,6 +40,57 @@ class UserProvider implements ControllerProviderInterface
                 'user' => $user
             ));
         })->bind('user_view');
+
+        /**
+         * Create
+         */
+        $controllers->match('/create', function (Application $app, Request $request) {
+
+            $data = array();
+
+            $form = $app['form.factory']->createBuilder('form', $data)
+                ->add('name', 'text', array(
+                    'trim' => true,
+                    'constraints' => array(
+                        new Assert\NotBlank(),
+                        new Assert\Regex(array('pattern' => '/^[a-zA-Z0-9-_@]+$/')),
+                    )
+                ))
+                ->add('ssh_publickey_content', 'text', array(
+                    'label' => 'SSH Public Key Content',
+                    'trim' => true,
+                    'constraints' => array(
+                        new Assert\NotBlank(),
+                    )
+                ))
+                ->getForm();
+
+            if ('POST' == $request->getMethod()) {
+                $form->bind($request);
+
+                if ($form->isValid()) {
+                    $data = $form->getData();
+
+                    //$group = new GitosisGroup($data['name']);
+                    //$app['gitosis_config']->addGroup($group)->save();
+
+                    return $app->redirect($app['url_generator']->generate('user_view', array('user' => $data['name'])));
+                }
+            }
+
+            return $app['twig']->render('user.create.twig', array('form' => $form->createView()));
+
+        })->bind('user_create');
+
+        /**
+         * Delete
+         */
+        $controllers->match('/delete/{user}', function(Application $app, $user) {
+
+                $app['gitosis_config']->removeUser($user)->save();
+
+                return $app->redirect($app['url_generator']->generate('user_list'));
+            })->bind('user_delete');
 
         return $controllers;
     }
