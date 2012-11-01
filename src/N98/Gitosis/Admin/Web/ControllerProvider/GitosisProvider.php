@@ -18,6 +18,8 @@ class GitosisProvider implements ControllerProviderInterface
          */
         $controllers->get('/persist', function (Application $app) {
             $app['gitosis_config']->persist();
+
+            return $app->redirect($app['url_generator']->generate('homepage'));
         })->bind('gitosis_persist');
 
         /**
@@ -25,6 +27,8 @@ class GitosisProvider implements ControllerProviderInterface
          */
         $controllers->get('/revert', function (Application $app) {
             $app['gitosis_config']->revert();
+
+            return $app->redirect($app['url_generator']->generate('homepage'));
         })->bind('gitosis_revert');
 
 
