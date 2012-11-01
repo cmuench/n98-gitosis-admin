@@ -253,19 +253,21 @@ class Config
             throw new \InvalidArgumentException('Cannot write empty ssh key');
         }
 
-        $sshKeyfilenme = $this->getSshKeyFilename($username);
+        $sshKeyFilename = $this->getSshKeyFilename($username);
 
-        if ($this->sshKeyExists($username) && !is_writable($sshKeyfilenme)) {
+        if ($this->sshKeyExists($username) && !is_writable($sshKeyFilename)) {
             // Key eixsts -> We need write access to key file
             throw new \RuntimeException('Cannot save ssh key file. No write acccess to file');
         } else {
             // Key does not exist -> We must have write access to keydir
-            if (!is_writable(dirname($sshKeyfilenme))) {
+            if (!is_writable(dirname($sshKeyFilename))) {
                 throw new \RuntimeException('Cannot save ssh key file. No write acccess to keydir');
             }
         }
 
-        file_put_contents($sshKeyfilenme, $sshKeyContent);
+        file_put_contents($sshKeyFilename, $sshKeyContent);
+
+        $this->getGitRepository()->add($sshKeyFilename);
 
         return $this;
     }
@@ -466,12 +468,23 @@ class Config
         return $this->getGitosisKeyDir() . DIRECTORY_SEPARATOR . $username . '.pub';
     }
 
+    /**
+     * Push data to git remote
+     */
     public function persist()
     {
         $this->getGitRepository()
              ->add($this->filename)
              ->commit('Updated config')
              ->push();
+    }
+
+    /**
+     * Revert local changes
+     */
+    public function revert()
+    {
+        $this->getGitRepository()->checkout('master');
     }
 
 }

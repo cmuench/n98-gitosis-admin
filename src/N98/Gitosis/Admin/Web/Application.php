@@ -15,6 +15,7 @@ use N98\Gitosis\Admin\Web\ControllerProvider\IndexProvider;
 use N98\Gitosis\Admin\Web\ControllerProvider\RepositoryProvider;
 use N98\Gitosis\Admin\Web\ControllerProvider\GroupProvider;
 use N98\Gitosis\Admin\Web\ControllerProvider\UserProvider;
+use N98\Gitosis\Admin\Web\ControllerProvider\GitosisProvider;
 
 class Application extends SilexApplication
 {
@@ -88,5 +89,6 @@ class Application extends SilexApplication
         $this->mount('/repository', new RepositoryProvider());
         $this->mount('/group', new GroupProvider());
         $this->mount('/user', new UserProvider());
+        $this->mount('/gitosis', new GitosisProvider());
     }
 }
