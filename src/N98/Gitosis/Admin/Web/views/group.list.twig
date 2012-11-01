@@ -3,6 +3,15 @@
 {% block content %}
     <h2>Groups</h2>
 
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            <a class="btn btn-toolbar" href="{{ url('group_create') }}">
+                <i class="icon-plus-sign"></i>
+                Create Group
+            </a>
+        </div>
+    </div>
+
     <ul class="nav nav-tabs nav-stacked">
     {% for group in groups %}
         <li>

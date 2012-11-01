@@ -20,6 +20,14 @@ class ConfigurationLoader
     /**
      * @return string
      */
+    public function getLocale()
+    {
+        return $this->configArray['locale'];
+    }
+
+    /**
+     * @return string
+     */
     public function getGitosisSshHost()
     {
         return $this->configArray['gitosis']['ssh_host'];

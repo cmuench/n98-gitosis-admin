@@ -30,6 +30,28 @@ class GroupProvider implements ControllerProviderInterface
             ));
         })->bind('group_view');
 
+        /**
+         * Create
+         */
+        $controllers->get('/create', function (Application $app) {
+        })->bind('group_create');
+
+        /**
+         * Edit
+         */
+        $controllers->get('/edit/{group}', function (Application $app, $group) {
+        })->bind('group_edit');
+
+        /**
+         * Delete
+         */
+        $controllers->match('/delete/{group}', function(Application $app, $group) {
+
+            $app['gitosis_config']->removeGroup($group)->save();
+
+            return $app->redirect($app['url_generator']->generate('group_list'));
+        })->bind('group_delete');
+
         return $controllers;
     }
 }

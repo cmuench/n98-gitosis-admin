@@ -2,9 +2,11 @@
 
 namespace N98\Gitosis\Admin\Web;
 
+use Symfony\Component\Translation\Loader\XliffFileLoader as TranslationLoader;
 use Silex\Application as SilexApplication;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
+use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use N98\Gitosis\Admin\Web\ServiceProvider\AppConfigProvider;
@@ -57,9 +59,17 @@ class Application extends SilexApplication
          */
         $this->register(new TranslationServiceProvider(
             array(
-                'locale_fallback' => 'en'
+                'translator.messages' => array(),
+                'locale' => $this['config']->getLocale(),
+                'locale_fallback' => 'en',
+                'loader' => new TranslationLoader()
             )
         ));
+
+        /**
+         * Validation
+         */
+        $this->register(new ValidatorServiceProvider());
 
         /**
          * URL generator

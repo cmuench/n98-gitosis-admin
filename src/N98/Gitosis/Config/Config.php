@@ -146,6 +146,8 @@ class Config
     }
 
     /**
+     * Deletes a repository from config and also removes access from every group
+     *
      * @param string $repoName
      * @return Config
      */
@@ -153,6 +155,9 @@ class Config
     {
         if (isset($this->repos[$repoName])) {
             unset($this->repos[$repoName]);
+            foreach ($this->groups as $group) { /* @var $group Group */
+                $group->removeRepositoryAccess($repoName);
+            }
         }
 
         return $this;
@@ -268,6 +273,8 @@ class Config
 
     /**
      * Save config
+     *
+     * @throws \RuntimeException
      */
     public function save()
     {
@@ -275,6 +282,9 @@ class Config
         $iniWriter->setNestSeparator(null);
         $iniString = $iniWriter->toString($this->buildData());
         $iniString = str_replace('"', '', $iniString);
+        if (!is_writable($this->filename)) {
+            throw new \RuntimeException('Gitosis config file is not writeable: ' . $this->filename);
+        }
         file_put_contents($this->filename, $iniString);
     }
 

@@ -3,6 +3,13 @@
 {% block content %}
     <h2>Repository: {{ repository.name }}</h2>
 
+    <div class="btn-toolbar pull-right">
+        <div class="btn-group">
+            <a href="#delete_repository_dialog" class="btn" role="button" data-toggle="modal"><i class="icon-trash"></i> Delete</a>
+            <a href="{{ url('repository_edit', { repo: repository.name}) }}" class="btn"><i class="icon-edit"></i> Edit</a>
+        </div>
+    </div>
+
     <table class="table table-bordered table-striped">
         <tbody>
             <tr>
@@ -30,14 +37,14 @@
             {% if groups_write %}
                 <li class="nav-header">Writable Groups</li>
                 {% for group in groups_write %}
-                    <li><a href="#"><i class="icon-list-alt"></i> {{ group.name }}</a></li>
+                    <li><a href="{{ url('group_view', { group: group.name }) }}"><i class="icon-list-alt"></i> {{ group.name }}</a></li>
                 {% endfor %}
             {% endif %}
 
             {% if groups_readonly %}
                 <li class="nav-header">Readonly Groups</li>
                 {% for group in groups_readonly %}
-                <li><a href="#"><i class="icon-list-alt"></i> {{ group.name }}</a></li>
+                <li><a href="{{ url('group_view', { group: group.name }) }}"><i class="icon-list-alt"></i> {{ group.name }}</a></li>
                 {% endfor %}
             {% endif %}
 
@@ -55,6 +62,21 @@
                 {% endfor %}
             {% endif %}
         </ul>
+    </div>
+
+    <!-- Delete repository dialog -->
+    <div id="delete_repository_dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="deleteRepositoryDialog" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="deleteRepositoryDialog">Delete Repository</h3>
+        </div>
+        <div class="modal-body">
+            <p>Do you really want to delete repository: <strong>{{ repository.name }}</strong>?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <a href="{{ url('repository_delete', { repo: repository.name}) }}" class="btn btn-danger">Delete</a>
+        </div>
     </div>
 
 {% endblock %}

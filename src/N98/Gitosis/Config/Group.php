@@ -212,6 +212,24 @@ class Group implements ElementInterface
     }
 
     /**
+     * Removes readonly and writeable access to a repository
+     *
+     * @param string $repositoryName
+     * @return Group
+     */
+    public function removeRepositoryAccess($repositoryName)
+    {
+        if ($this->hasReadonlyAccessToRepository($repositoryName)) {
+            $this->removeReadonly($repositoryName);
+        }
+        if ($this->hasWriteAccessToRepository($repositoryName)) {
+            $this->removeWritable($repositoryName);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
