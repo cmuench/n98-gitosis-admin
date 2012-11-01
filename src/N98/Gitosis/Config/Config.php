@@ -239,6 +239,59 @@ class Config
     }
 
     /**
+     * Creates or overwrites a ssh key file
+     *
+     * @param string $username
+     * @param string $sshKeyContent
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     * @return Config
+     */
+    public function saveSshKey($username, $sshKeyContent)
+    {
+        if (empty($sshKeyContent)) {
+            throw new \InvalidArgumentException('Cannot write empty ssh key');
+        }
+
+        $sshKeyfilenme = $this->getSshKeyFilename($username);
+
+        if ($this->sshKeyExists($username) && !is_writable($sshKeyfilenme)) {
+            // Key eixsts -> We need write access to key file
+            throw new \RuntimeException('Cannot save ssh key file. No write acccess to file');
+        } else {
+            // Key does not exist -> We must have write access to keydir
+            if (!is_writable(dirname($sshKeyfilenme))) {
+                throw new \RuntimeException('Cannot save ssh key file. No write acccess to keydir');
+            }
+        }
+
+        file_put_contents($sshKeyfilenme, $sshKeyContent);
+
+        return $this;
+    }
+
+    /**
+     * Check if a user already exists
+     *
+     * @param string $username
+     * @return bool
+     */
+    public function userExists($username)
+    {
+        $users = $this->getUsers();
+        return in_array($username, $users);
+    }
+
+    /**
+     * @param string $username
+     * @return bool
+     */
+    public function userNotExists($username)
+    {
+        return !$this->userExists($username);
+    }
+
+    /**
      * @param string $username
      * @param bool $removeKey
      * @throws \RuntimeException

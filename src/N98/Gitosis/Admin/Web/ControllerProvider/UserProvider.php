@@ -6,6 +6,7 @@ use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form;
 
 class UserProvider implements ControllerProviderInterface
 {
@@ -48,12 +49,16 @@ class UserProvider implements ControllerProviderInterface
 
             $data = array();
 
-            $form = $app['form.factory']->createBuilder('form', $data)
+            $builder = $app['form.factory']->createBuilder('form', $data)
                 ->add('name', 'text', array(
                     'trim' => true,
                     'constraints' => array(
                         new Assert\NotBlank(),
-                        new Assert\Regex(array('pattern' => '/^[a-zA-Z0-9-_@]+$/')),
+                        new Assert\Regex(
+                            array(
+                                'pattern' => '/^[.a-zA-Z0-9-_@]+$/'
+                            )
+                        )
                     )
                 ))
                 ->add('ssh_publickey_content', 'text', array(
@@ -62,8 +67,19 @@ class UserProvider implements ControllerProviderInterface
                     'constraints' => array(
                         new Assert\NotBlank(),
                     )
-                ))
-                ->getForm();
+                ));
+
+                /**
+                 * Check if user already exists
+                 */
+                $builder->addEventListener(Form\FormEvents::POST_BIND, function(Form\FormEvent $event) use ($app) {
+                $form = $event->getForm();
+                if ($app['gitosis_config']->userExists($form['name']->getData())) {
+                    $form->addError(new Form\FormError('User already exists'));
+                }
+            });
+
+            $form = $builder->getForm();
 
             if ('POST' == $request->getMethod()) {
                 $form->bind($request);
@@ -71,8 +87,7 @@ class UserProvider implements ControllerProviderInterface
                 if ($form->isValid()) {
                     $data = $form->getData();
 
-                    //$group = new GitosisGroup($data['name']);
-                    //$app['gitosis_config']->addGroup($group)->save();
+                    $app['gitosis_config']->saveSshKey($data['name'], $data['ssh_publickey_content']);
 
                     return $app->redirect($app['url_generator']->generate('user_view', array('user' => $data['name'])));
                 }
