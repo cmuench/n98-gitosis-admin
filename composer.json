@@ -21,6 +21,7 @@
         "symfony/translation": "2.1.*",
         "symfony/locale": "2.1.*",
         "symfony/event-dispatcher": "2.1.*",
+        "symfony/security": "2.1.*",
         "twig/twig": "1.9.*",
         "symfony/twig-bridge": "2.1.*",
         "zendframework/zend-text": "2.0.*",

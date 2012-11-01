@@ -10,6 +10,7 @@ use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\SessionServiceProvider;
+use Silex\Provider\SecurityServiceProvider;
 use N98\Gitosis\Admin\Web\ServiceProvider\AppConfigProvider;
 use N98\Gitosis\Admin\Web\ServiceProvider\GitosisConfigProvider;
 use N98\Gitosis\Admin\Web\ServiceProvider\FlashMessageProvider;
@@ -47,8 +48,7 @@ class Application extends SilexApplication
         /**
          * Register twig
          */
-        $twigService = new TwigServiceProvider();
-        $this->register($twigService, array(
+        $this->register(new TwigServiceProvider(), array(
             'twig.path' => __DIR__ . '/views'
         ));
 
@@ -73,6 +73,24 @@ class Application extends SilexApplication
                 'loader' => new TranslationLoader()
             )
         ));
+
+        /**
+         * Security
+         */
+        $this->register(new SecurityServiceProvider());
+        $this['security.firewalls'] = array(
+            'login' => array(
+                'pattern' => '^/login$',
+            ),
+            'secured' => array(
+                'pattern' => '^.*$',
+                'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
+                'logout' => array('logout_path' => '/logout'),
+                'users' => array(
+                    'admin' => array('ROLE_ADMIN', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg=='),
+                )
+            )
+        );
 
         /**
          * Validation

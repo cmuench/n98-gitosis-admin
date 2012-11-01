@@ -1,0 +1,40 @@
+{% extends "layout_auth.twig" %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="span4 offset4">
+            <form action="{{ path('login_check') }}" method="post" class="form-horizontal">
+                <fieldset>
+                    <legend>Login</legend>
+
+                    <div class="control-group">
+                        <label class="control-label" for="_username">Username</label>
+                        <div class="controls">
+                            <input id="_username" type="text" name="_username" value="{{ last_username }}" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="_password">Password</label>
+                        <div class="controls">
+                            <input id="_password" type="password" name="_password" value="" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <input type="submit" value="Login" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        {% if error %}
+            <div class="row-fluid">
+                <div class="span4 offset4">
+                    <span class="alert alert-error">{{ error }}</span>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
