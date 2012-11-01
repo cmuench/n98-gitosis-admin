@@ -9,8 +9,10 @@ use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
+use Silex\Provider\SessionServiceProvider;
 use N98\Gitosis\Admin\Web\ServiceProvider\AppConfigProvider;
 use N98\Gitosis\Admin\Web\ServiceProvider\GitosisConfigProvider;
+use N98\Gitosis\Admin\Web\ServiceProvider\FlashMessageProvider;
 use N98\Gitosis\Admin\Web\ControllerProvider\IndexProvider;
 use N98\Gitosis\Admin\Web\ControllerProvider\RepositoryProvider;
 use N98\Gitosis\Admin\Web\ControllerProvider\GroupProvider;
@@ -51,6 +53,11 @@ class Application extends SilexApplication
         ));
 
         /**
+         * Sessions
+         */
+        $this->register(new SessionServiceProvider());
+
+        /**
          * Forms
          */
         $this->register(new FormServiceProvider());
@@ -81,6 +88,12 @@ class Application extends SilexApplication
          * Register gitosis config provider
          */
         $this->register(new GitosisConfigProvider());
+
+        /**
+         * Flash messages
+         */
+        $this->register(new FlashMessageProvider());
+
 
         /**
          * Register controllers

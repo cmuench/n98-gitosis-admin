@@ -56,11 +56,25 @@ class RepositoryProvider implements ControllerProviderInterface
                 if ($form->isValid()) {
                     $data = $form->getData();
 
-                    $repository = new GitosisRepository($data['name']);
-                    $repository->setOwner($data['owner']);
-                    $repository->setDaemon($data['daemon']);
-                    $repository->setGitweb($data['gitweb']);
-                    $app['gitosis_config']->addRepository($repository)->save();
+                    try {
+                        $repository = new GitosisRepository($data['name']);
+                        $repository->setOwner($data['owner']);
+                        $repository->setDaemon($data['daemon']);
+                        $repository->setGitweb($data['gitweb']);
+                        $app['gitosis_config']->addRepository($repository)->save();
+
+                        $app['session']->set('flash', array(
+                            'type'    => 'success',
+                            'short'   => 'Saved',
+                            'ext'     => 'New repository was created.',
+                        ));
+                    } catch (\Exception $e) {
+                        $app['session']->set('flash', array(
+                            'type'    => 'error',
+                            'short'   => 'Could not save repository',
+                            'ext'     => $e->getMessage(),
+                        ));
+                    }
 
                     return $app->redirect($app['url_generator']->generate('repository_list'));
                 }

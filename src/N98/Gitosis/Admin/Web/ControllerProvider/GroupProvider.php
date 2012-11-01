@@ -5,6 +5,7 @@ namespace N98\Gitosis\Admin\Web\ControllerProvider;
 use N98\Gitosis\Config\Group as GitosisGroup;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -47,14 +48,30 @@ class GroupProvider implements ControllerProviderInterface
 
             $data = array();
 
-            $form = $app['form.factory']->createBuilder('form', $data)
+            $builder = $app['form.factory']->createBuilder('form', $data)
                 ->add('name', 'text', array(
                     'constraints' => array(
                         new Assert\NotBlank(),
                         new Assert\Regex(array('pattern' => '/^[a-zA-Z0-9-_]+$/')),
                     )
-                ))
-                ->getForm();
+                ));
+
+            /**
+             * Check if group already exists
+             */
+            $builder->addEventListener(Form\FormEvents::POST_BIND, function(Form\FormEvent $event) use ($app) {
+                $form = $event->getForm();
+                    try {
+                        if ($app['gitosis_config']->getGroup($form['name']->getData())) {
+                            $form->addError(new Form\FormError('Group already exists'));
+                        }
+                    } catch (\Exception $e) {
+                        // ok
+                    }
+            });
+
+
+            $form = $builder->getForm();
 
             if ('POST' == $request->getMethod()) {
                 $form->bind($request);
@@ -62,8 +79,22 @@ class GroupProvider implements ControllerProviderInterface
                 if ($form->isValid()) {
                     $data = $form->getData();
 
-                    $group = new GitosisGroup($data['name']);
-                    $app['gitosis_config']->addGroup($group)->save();
+                    try {
+                        $group = new GitosisGroup($data['name']);
+                        $app['gitosis_config']->addGroup($group)->save();
+
+                        $app['session']->set('flash', array(
+                            'type'    => 'success',
+                            'short'   => 'Saved',
+                            'ext'     => 'New group was created.',
+                        ));
+                    } catch (\Exception $e) {
+                        $app['session']->set('flash', array(
+                            'type'    => 'error',
+                            'short'   => 'Could not create group',
+                            'ext'     => $e->getMessage(),
+                        ));
+                    }
 
                     return $app->redirect($app['url_generator']->generate('group_view', array('group' => $data['name'])));
                 }

@@ -38,6 +38,15 @@
     </div>
 </div>
 
+{% block flash %}
+    {% if flash is defined %}
+        <div class="alert alert-block alert-{{ flash.type }}">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <p><strong>{{ flash.short }}</strong> {{ flash.ext }}</p>
+        </div>
+    {% endif %}
+{% endblock flash %}
+
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
