@@ -98,6 +98,42 @@ class UserProvider implements ControllerProviderInterface
         })->bind('user_create');
 
         /**
+         * Edit
+         */
+        $controllers->match('/edit/{user}', function (Application $app, Request $request, $user) {
+
+            $data = array(
+                'ssh_publickey_content' => $app['gitosis_config']->getSshKeyContent($user),
+            );
+
+            $builder = $app['form.factory']->createBuilder('form', $data)
+                ->add('ssh_publickey_content', 'text', array(
+                    'label' => 'SSH Public Key Content',
+                    'trim' => true,
+                    'constraints' => array(
+                        new Assert\NotBlank(),
+                    )
+                ));
+
+            $form = $builder->getForm();
+
+            if ('POST' == $request->getMethod()) {
+                $form->bind($request);
+
+                if ($form->isValid()) {
+                    $data = $form->getData();
+
+                    $app['gitosis_config']->saveSshKey($user, $data['ssh_publickey_content']);
+
+                    return $app->redirect($app['url_generator']->generate('user_view', array('user' => $user)));
+                }
+            }
+
+            return $app['twig']->render('user.edit.twig', array('form' => $form->createView(), 'user' => $user));
+
+        })->bind('user_edit');
+
+        /**
          * Delete
          */
         $controllers->match('/delete/{user}', function(Application $app, $user) {

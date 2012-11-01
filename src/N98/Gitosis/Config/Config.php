@@ -273,6 +273,19 @@ class Config
     }
 
     /**
+     * @param string $username
+     * @return string
+     */
+    public function getSshKeyContent($username)
+    {
+        if ($this->sshKeyExists($username)) {
+            return file_get_contents($this->getSshKeyFilename($username));
+        }
+
+        return '';
+    }
+
+    /**
      * Check if a user already exists
      *
      * @param string $username
