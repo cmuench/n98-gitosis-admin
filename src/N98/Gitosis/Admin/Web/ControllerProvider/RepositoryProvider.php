@@ -126,7 +126,7 @@ class RepositoryProvider implements ControllerProviderInterface
             }
 
             // display the form
-            return $app['twig']->render('repository.create.twig', array('form' => $form->createView()));
+            return $app['twig']->render('repository.edit.twig', array('form' => $form->createView(), 'repo' => $repo));
 
         })->bind('repository_edit');
 

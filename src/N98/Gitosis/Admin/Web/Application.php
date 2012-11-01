@@ -78,19 +78,28 @@ class Application extends SilexApplication
          * Security
          */
         $this->register(new SecurityServiceProvider());
-        $this['security.firewalls'] = array(
-            'login' => array(
-                'pattern' => '^/login$',
-            ),
-            'secured' => array(
-                'pattern' => '^.*$',
-                'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
-                'logout' => array('logout_path' => '/logout'),
-                'users' => array(
-                    'admin' => array('ROLE_ADMIN', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg=='),
+        if ($this['config']->isSecurityAuthentificationEnabled()) {
+            $this['security.firewalls'] = array(
+                'login' => array(
+                    'pattern' => '^/login$',
+                ),
+                'secured' => array(
+                    'pattern' => '^.*$',
+                    'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
+                    'logout' => array('logout_path' => '/logout'),
+                    'users' => array(
+                        'admin' => array('ROLE_ADMIN', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg=='),
+                    )
                 )
-            )
-        );
+            );
+        } else {
+            // No auth
+            $this['security.firewalls'] = array(
+                'unsecured' => array(
+                    'anonymous' => true,
+                ),
+            );
+        }
 
         /**
          * Validation

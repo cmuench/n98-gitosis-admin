@@ -50,6 +50,14 @@ class ConfigurationLoader
     }
 
     /**
+     * @return bool
+     */
+    public function isSecurityAuthentificationEnabled()
+    {
+        return $this->configArray['security']['authentification']['enabled'];
+    }
+
+    /**
      * @return array
      */
     public function toArray()

@@ -23,11 +23,9 @@
             <ul class="dropdown-menu">
                 <li><a href="{{ url('gitosis_persist') }}"><i class="icon-hdd"></i> Persist</a></li>
                 <li><a href="{{ url('gitosis_revert') }}"><i class="icon-backward"></i> Revert</a></li>
-                <li class="divider"></li>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="divider"></li>
                     <a href="{{ path('logout') }}">Logout</a>
-                {% else %}
-                    <a href="{{ path('login') }}">Login</a>
                 {% endif %}
             </ul>
         </div>
