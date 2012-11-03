@@ -3,11 +3,53 @@
 {% block content %}
     <h2>Group: {{ group.name }}</h2>
 
-    <div class="btn-toolbar pull-right">
-        <div class="btn-group">
-            <a href="#delete_group_dialog" class="btn" role="button" data-toggle="modal"><i class="icon-trash"></i> Delete</a>
-            <a href="{{ url('group_edit', { group: group.name}) }}" class="btn"><i class="icon-edit"></i> Edit</a>
-            <a href="{{ url('group_users', { group: group.name}) }}" class="btn"><i class="icon-user"></i> Users</a>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="btn-toolbar pull-right">
+                <div class="btn-group">
+                    <a href="#delete_group_dialog" class="btn" role="button" data-toggle="modal"><i class="icon-trash"></i> Delete</a>
+                    <a href="{{ url('group_edit', { group: group.name}) }}" class="btn"><i class="icon-edit"></i> Edit</a>
+                    <a href="{{ url('group_users', { group: group.name}) }}" class="btn"><i class="icon-user"></i> Users</a>
+                    <a href="{{ url('group_writable', { group: group.name}) }}" class="btn"><i class="icon-book"></i> Writable Repositories</a>
+                    <a href="{{ url('group_readonly', { group: group.name}) }}" class="btn"><i class="icon-book"></i> Readonly Repositories</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Repositories</h3>
+    <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-hover">
+                <caption><strong>Writable Repositories</strong></caption>
+                {% for writable_repo in group.writable %}
+                <tr>
+                    <td><a href="{{ url('repository_view', { repo: writable_repo}) }}"><i class="icon-book"></i> {{ writable_repo }}</a></td>
+                </tr>
+                {% else %}
+                    <tr>
+                        <td>
+                            <span class="alert alert-info">No repository assigned</span>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="span6">
+            <table class="table table-hover">
+                <caption><strong>Readonly Repositories</strong></caption>
+                {% for readonly_repo in group.readonly%}
+                    <tr>
+                        <td><a href="{{ url('repository_view', { repo: readonly_repo}) }}"><i class="icon-book"></i> {{ readonly_repo }}</a></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>
+                            <span class="alert alert-info">No repository assigned</span>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
     </div>
 

@@ -35,7 +35,7 @@ class GroupProvider implements ControllerProviderInterface
         })->bind('group_view');
 
         /**
-         * Add users
+         * Members (Users)
          */
         $controllers->match('/{group}/users', function(Application $app, Request $request, $group) {
 
@@ -94,6 +94,120 @@ class GroupProvider implements ControllerProviderInterface
 
         })->bind('group_users');
 
+        /**
+         * Writable
+         */
+        $controllers->match('/{group}/writable', function(Application $app, Request $request, $group) {
+
+            /* @var $gitosisGroup GitosisGroup */
+            $gitosisGroup = $app['gitosis_config']->getGroup($group);
+
+            $data = array(
+                'writable' => $gitosisGroup->getWritable(),
+            );
+
+            $repositories = $app['gitosis_config']->getRepositories();
+            $choices = array_combine($repositories, $repositories);
+            $builder = $app['form.factory']->createBuilder('form', $data)
+                ->add('writable', 'choice', array(
+                    'expanded' => true,
+                    'multiple' => true,
+                    'choices'  => $choices,
+                )
+            );
+
+            $form = $builder->getForm();
+
+            if ('POST' == $request->getMethod()) {
+                $form->bind($request);
+
+                if ($form->isValid()) {
+                    try {
+                        $data = $form->getData();
+                        $gitosisGroup = $app['gitosis_config']->getGroup($group);
+                        $gitosisGroup->setWritable($data['writable']);
+                        $app['gitosis_config']->save();
+
+                        $app['session']->set('flash', array(
+                            'type'    => 'success',
+                            'short'   => 'Saved',
+                            'ext'     => 'Writable repositories was saved.',
+                        ));
+                    } catch (\Exception $e) {
+                        $app['session']->set('flash', array(
+                            'type'    => 'error',
+                            'short'   => 'Error',
+                            'ext'     => $e->getMessage(),
+                        ));
+                    }
+
+                    return $app->redirect($app['url_generator']->generate('group_view', array('group' => $group)));
+                }
+            }
+
+            return $app['twig']->render('group.writable.twig', array('form' => $form->createView(), 'group' => $group));
+
+        })->bind('group_writable');
+
+        /**
+         * Readonly
+         */
+        $controllers->match('/{group}/readonly', function(Application $app, Request $request, $group) {
+                /* @var $gitosisGroup GitosisGroup */
+                $gitosisGroup = $app['gitosis_config']->getGroup($group);
+
+                $data = array(
+                    'readonly' => $gitosisGroup->getReadonly(),
+                );
+
+                $repositories = $app['gitosis_config']->getRepositories();
+                $choices = array_combine($repositories, $repositories);
+                $builder = $app['form.factory']->createBuilder('form', $data)
+                    ->add('readonly', 'choice', array(
+                        'expanded' => true,
+                        'multiple' => true,
+                        'choices'  => $choices,
+                    )
+                );
+
+                $form = $builder->getForm();
+
+                if ('POST' == $request->getMethod()) {
+                    $form->bind($request);
+
+                    if ($form->isValid()) {
+                        try {
+                            $data = $form->getData();
+                            $gitosisGroup = $app['gitosis_config']->getGroup($group);
+                            $gitosisGroup->setReadonly($data['readonly']);
+                            $app['gitosis_config']->save();
+
+                            $app['session']->set('flash', array(
+                                    'type'    => 'success',
+                                    'short'   => 'Saved',
+                                    'ext'     => 'Readonly repositories was saved.',
+                                ));
+                        } catch (\Exception $e) {
+                            $app['session']->set('flash', array(
+                                    'type'    => 'error',
+                                    'short'   => 'Error',
+                                    'ext'     => $e->getMessage(),
+                                ));
+                        }
+
+                        return $app->redirect($app['url_generator']->generate('group_view', array('group' => $group)));
+                    }
+                }
+
+                return $app['twig']->render('group.readonly.twig', array('form' => $form->createView(), 'group' => $group));
+        })->bind('group_readonly');
+
+        /**
+         * Edit form
+         *
+         * @param array $data
+         * @return \Symfony\Component\Form\Form
+         */
         $createGroupEditForm = function($data) use ($app) {
             $builder = $app['form.factory']->createBuilder('form', $data)
                 ->add('name', 'text', array(

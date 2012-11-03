@@ -167,4 +167,12 @@ class Repository implements ElementInterface
 
         return $data;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }
