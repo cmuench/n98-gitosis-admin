@@ -143,12 +143,12 @@ Allow group readonly acccess to repository
   $ bin/n98-gitosis-admin group:repo:add:readonly
 
 Web Interface
--------------
+=============
 
 * Manage Repositories, Groups and Users
 
 Installation
-============
+------------
 
 * Clone `gitosis-admin` repository on your local machine.
 
