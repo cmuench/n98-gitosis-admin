@@ -10,6 +10,19 @@
         </div>
     </div>
 
+    <div class="row-fluid">
+        <div class="span12">
+            <h3>Groups</h3>
+            <ul class="nav nav-tabs nav-stacked">
+                {% for group in groups_of_user %}
+                    <li>
+                        <a href="{{ url('group_view', { group: group }) }}"><i class="icon-black icon-list-alt"></i> {{ group }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
     <!-- Delete user dialog -->
     <div id="delete_user_dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="deleteUserDialog" aria-hidden="true">
         <div class="modal-header">

@@ -205,6 +205,15 @@ class Group implements ElementInterface
     }
 
     /**
+     * @param string $username
+     * @return bool
+     */
+    public function isMember($username)
+    {
+        return in_array($username, $this->members);
+    }
+
+    /**
      * @param $repositoryName
      * @return bool
      */
@@ -260,6 +269,14 @@ class Group implements ElementInterface
         }
 
         return $data;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 
 }

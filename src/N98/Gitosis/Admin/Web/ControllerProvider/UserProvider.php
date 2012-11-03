@@ -37,8 +37,10 @@ class UserProvider implements ControllerProviderInterface
          * View
          */
         $controllers->get('/view/{user}', function (Application $app, $user) {
+
             return $app['twig']->render('user.view.twig', array(
-                'user' => $user
+                'user' => $user,
+                'groups_of_user' => $app['gitosis_config']->getGroupsByUsername($user),
             ));
         })->bind('user_view');
 

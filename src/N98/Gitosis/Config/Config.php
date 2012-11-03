@@ -217,6 +217,24 @@ class Config
     }
 
     /**
+     * Returns a list of groups in which a user are
+     *
+     * @param string $username
+     * @return array[Group]
+     */
+    public function getGroupsByUsername($username)
+    {
+        $groups = array();
+        foreach ($this->groups as $group) { /* @var $group Group */
+            if ($group->isMember($username)) {
+                $groups[] = $group;
+            }
+        }
+
+        return $groups;
+    }
+
+    /**
      * List of key basenames
      *
      * @return array[string]
