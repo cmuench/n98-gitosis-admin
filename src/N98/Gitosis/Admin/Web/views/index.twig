@@ -1,32 +1,32 @@
 {% extends "layout_page.twig" %}
 
 {% block content %}
-    <h2 xmlns="http://www.w3.org/1999/html">Home</h2>
+    <h2 xmlns="http://www.w3.org/1999/html">{{ 'Home'|trans }}</h2>
 
     <div class="row-fluid">
         <div class="span12 well well-small">
-            <h3><a href="{{ url('repository_list') }}">Repsitories</a></h3>
+            <h3><a href="{{ url('repository_list') }}">{{ 'Repsitories'|trans }}</a></h3>
             <ul>
-                <li>Lists all repositories</li>
+                <li>{{ 'Lists all repositories'|trans }}</li>
             </ul>
         </div>
     </div>
     <div class="row-fluid">
         <div class="span12 well well-small">
-            <h3><a href="{{ url('group_list') }}">Groups</a></h3>
+            <h3><a href="{{ url('group_list') }}">{{ 'Groups'|trans }}</a></h3>
             <ul>
-                <li>Add Readonly Groups</li>
-                <li>Add Writable Groups</li>
-                <li>Assigned Users</li>
+                <li>{{ 'Add Readonly Groups'|trans }}</li>
+                <li>{{ 'Add Writable Groups'|trans }}</li>
+                <li>{{ 'Assigned Users'|trans }}</li>
             </ul>
         </div>
     </div>
     <div class="row-fluid">
         <div class="span12 well well-small">
-            <h3><a href="{{ url('user_list') }}">Users</a></h3>
+            <h3><a href="{{ url('user_list') }}">{{ 'Users'|trans }}</a></h3>
             <ul>
-                <li>Create User</li>
-                <li>Manage SSH Public Key</li>
+                <li>{{ 'Create User'|trans }}</li>
+                <li>{{ 'Manage SSH Public Key'|trans }}</li>
             </ul>
         </div>
     </div>

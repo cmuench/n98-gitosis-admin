@@ -2,7 +2,7 @@
 
 namespace N98\Gitosis\Admin\Web;
 
-use Symfony\Component\Translation\Loader\XliffFileLoader as TranslationLoader;
+use Symfony\Component\Translation\Loader\YamlFileLoader as TranslationLoader;
 use Silex\Application as SilexApplication;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
@@ -46,13 +46,6 @@ class Application extends SilexApplication
         $this->register(new AppConfigProvider());
 
         /**
-         * Register twig
-         */
-        $this->register(new TwigServiceProvider(), array(
-            'twig.path' => __DIR__ . '/views'
-        ));
-
-        /**
          * Sessions
          */
         $this->register(new SessionServiceProvider());
@@ -65,14 +58,20 @@ class Application extends SilexApplication
         /**
          * Translations
          */
+        $this['locale'] = $this['config']->getLocale();
         $this->register(new TranslationServiceProvider(
             array(
-                'translator.messages' => array(),
-                'locale' => $this['config']->getLocale(),
                 'locale_fallback' => 'en',
-                'loader' => new TranslationLoader()
             )
         ));
+        $this['translator'] = $this->share($this->extend('translator', function($translator) {
+            $translator->addLoader('yaml', new TranslationLoader());
+
+            $translator->addResource('yaml', __DIR__ . '/locales/en.yaml', 'en');
+            $translator->addResource('yaml', __DIR__ . '/locales/de.yaml', 'de');
+
+            return $translator;
+        }));
 
         /**
          * Security
@@ -100,6 +99,13 @@ class Application extends SilexApplication
                 ),
             );
         }
+
+        /**
+         * Register twig template engine
+         */
+        $this->register(new TwigServiceProvider(), array(
+            'twig.path' => __DIR__ . '/views'
+        ));
 
         /**
          * Validation

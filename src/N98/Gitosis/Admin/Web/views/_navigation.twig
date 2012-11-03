@@ -3,16 +3,16 @@
         <a class="brand" href="#">n98-gitosis-admin</a>
         <ul class="nav">
             <li>
-                <a href="{{ url('homepage') }}"><i class="icon-home icon-white"></i> Home</a>
+                <a href="{{ url('homepage') }}"><i class="icon-home icon-white"></i> {{ 'Home'|trans }}</a>
             </li>
             <li>
-                <a href="{{ url('repository_list') }}"><i class="icon-book icon-white"></i> Repositories</a>
+                <a href="{{ url('repository_list') }}"><i class="icon-book icon-white"></i> {{ 'Repositories'|trans }}</a>
             </li>
             <li>
-                <a href="{{ url('group_list') }}"><i class="icon-list-alt icon-white"></i> Groups</a>
+                <a href="{{ url('group_list') }}"><i class="icon-list-alt icon-white"></i> {{ 'Groups'|trans }}</a>
             </li>
             <li>
-                <a href="{{ url('user_list') }}"><i class="icon-user icon-white"></i> Users</a>
+                <a href="{{ url('user_list') }}"><i class="icon-user icon-white"></i> {{ 'Users'|trans }}</a>
             </li>
         </ul>
         <div class="btn-group pull-right">
@@ -21,11 +21,11 @@
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="{{ url('gitosis_persist') }}"><i class="icon-hdd"></i> Persist</a></li>
-                <li><a href="{{ url('gitosis_revert') }}"><i class="icon-backward"></i> Revert</a></li>
+                <li><a href="{{ url('gitosis_persist') }}"><i class="icon-hdd"></i> {{ 'Persist'|trans }}</a></li>
+                <li><a href="{{ url('gitosis_revert') }}"><i class="icon-backward"></i> {{ 'Revert'|trans }}</a></li>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li class="divider"></li>
-                    <a href="{{ path('logout') }}">Logout</a>
+                    <a href="{{ path('logout') }}">{{ 'Logout'|trans }}</a>
                 {% endif %}
             </ul>
         </div>

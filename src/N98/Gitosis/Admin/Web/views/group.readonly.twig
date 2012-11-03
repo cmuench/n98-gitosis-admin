@@ -2,7 +2,7 @@
 {% import "_form_macros.twig" as form_macros %}
 
 {% block content %}
-    <h2>Group {{ group }}: Readonly Repositories</h2>
+    <h2>{{ 'Group'|trans }} {{ group }}: {{ 'Readonly Repositories'|trans }}</h2>
 
     <form action="#" method="post">
         {{ form_errors(form) }}

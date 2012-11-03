@@ -1,13 +1,13 @@
 {% extends "layout_page.twig" %}
 
 {% block content %}
-    <h2>Users</h2>
+    <h2>{{ 'Users'|trans }}</h2>
 
     <div class="btn-toolbar">
         <div class="btn-group">
             <a class="btn btn-toolbar" href="{{ url('user_create') }}">
                 <i class="icon-plus-sign"></i>
-                Create User
+                {{ 'Create User'|trans }}
             </a>
         </div>
     </div>
@@ -17,7 +17,7 @@
         <li>
             <a href="{{ url('user_view', {user:user}) }}"><i class="icon-black icon-user"></i>  {{ user }}
                 {% if user not in ssh_key_exists %}
-                    <span class="label label-important">Public Key is missing</span>
+                    <span class="label label-important">{{ 'Public Key is missing'|trans }}</span>
                 {% endif %}
             </a
         </li>
