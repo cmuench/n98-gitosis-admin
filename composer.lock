@@ -1,5 +1,5 @@
 {
-    "hash": "3ec8d529a663e12fe0e98d7abdac4e6a",
+    "hash": "8ab7bfecb55e5f93900143e03b47cf1c",
     "packages": [
         {
             "name": "klaussilveira/gitter",
@@ -100,12 +100,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Silex.git",
-                "reference": "69d710011ee8f9fa286854fcf636a07ad76b570b"
+                "reference": "dd39fd366b7e978ed6b48923290f0b55d99d0d91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Silex/zipball/69d710011ee8f9fa286854fcf636a07ad76b570b",
-                "reference": "69d710011ee8f9fa286854fcf636a07ad76b570b",
+                "url": "https://github.com/fabpot/Silex/zipball/dd39fd366b7e978ed6b48923290f0b55d99d0d91",
+                "reference": "dd39fd366b7e978ed6b48923290f0b55d99d0d91",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "symfony/css-selector": ">=2.1,<2.3-dev",
                 "symfony/dom-crawler": ">=2.1,<2.3-dev"
             },
-            "time": "1351540898",
+            "time": "1351701053",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1244,6 +1244,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "klaussilveira/gitter": 20
+        "klaussilveira/gitter": 20,
+        "silex/silex": 20
     }
 }
