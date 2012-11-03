@@ -40,9 +40,6 @@ class ConfigurationLoader
 
     public function __construct($configFile)
     {
-        if (!file_exists($configFile)) {
-            throw new \InvalidArgumentException('Config file does not exit');
-        }
         $globalConfig = Yaml::parse($configFile);
         $this->configArray = $globalConfig;
     }
