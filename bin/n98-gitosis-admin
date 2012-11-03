@@ -14,6 +14,8 @@ if ((!$loader = includeIfExists(__DIR__.'/../vendor/autoload.php')) && (!$loader
         'php composer.phar install'.PHP_EOL);
 }
 
+define('N98_GITOSIS_ADMIN_CONFIG_FILE', __DIR__ . '/../config.yaml');
+
 $application = new N98\Gitosis\Admin\Cli\Application($loader);
 $application->run();
 

@@ -26,6 +26,8 @@
  * @author Christian Münch <christian@muench-worms.de>
  */
 
+define('N98_GITOSIS_ADMIN_CONFIG_FILE', __DIR__ . '/../../../../test_config.yaml');
+
 use Silex\WebTestCase;
 
 class InterfaceTest extends WebTestCase
@@ -33,14 +35,8 @@ class InterfaceTest extends WebTestCase
     public function createApplication()
     {
         $app = require __DIR__ . '/../../../../../src/web_bootstrap.php';
-
-        $configFile = __DIR__ . '/../../../../test_config.yaml';
-        $app['config'] = new N98\Gitosis\Admin\ConfigurationLoader($configFile);
         $app['session.test'] = true;
         $app['locale'] = 'en';
-
-        // @TODO refactor config loading
-        $app['gitosis_config'] = new N98\Gitosis\Config\Config(rtrim($app['config']->getGitosisAdminRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'gitosis.conf');
 
         return $app;
     }

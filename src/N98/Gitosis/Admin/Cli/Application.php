@@ -51,11 +51,8 @@ class Application extends BaseApplication
     public function __construct()
     {
         parent::__construct(self::APP_NAME, self::APP_VERSION);
-        $configFile = __DIR__ . '/../../../../../config.yaml';
-        if (!file_exists($configFile)) {
-            throw new \RuntimeException('config.yaml file was not found.');
-        }
-        $this->config = new ConfigurationLoader($configFile);
+
+        $this->config = new ConfigurationLoader(N98_GITOSIS_ADMIN_CONFIG_FILE);
 
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Repository\AddCommand());
         $this->add(new \N98\Gitosis\Admin\Cli\Command\Repository\ListCommand());

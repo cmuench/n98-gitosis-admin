@@ -44,8 +44,7 @@ class AppConfigProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $configFile = __DIR__ . '/../../../../../../config.yaml';
-        $configLoader = new ConfigurationLoader($configFile);
+        $configLoader = new ConfigurationLoader(N98_GITOSIS_ADMIN_CONFIG_FILE);
         $app['config'] = $configLoader;
     }
 

@@ -40,6 +40,9 @@ class ConfigurationLoader
 
     public function __construct($configFile)
     {
+        if (!file_exists($configFile)) {
+            throw new \InvalidArgumentException('Global config file was not found.');
+        }
         $globalConfig = Yaml::parse($configFile);
         $this->configArray = $globalConfig;
     }
