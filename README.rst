@@ -27,8 +27,15 @@ Add path to your gitosis config (Cloned gitosis-admin repository):
 
 .. code-block:: yaml
 
+   locale: en
+   security:
+     authentification:
+       enabled: false
+
    gitosis:
-     root_directory: /my-path/gitosis-admin
+     root_directory: /path/to/gitosis-admin
+     ssh_user: git
+     ssh_host: myhost
 
 
 CLI Interface
@@ -138,10 +145,25 @@ Allow group readonly acccess to repository
 Web Interface
 -------------
 
-Web Interface is coming.... First CLI interface must be finished.
+* Manage Repositories, Groups and Users
+
+Installation
+============
+
+* Clone `gitosis-admin` repository on your local machine.
+
+* Make sure that webserver user has a valid ssh key which is assigned to `gitosis-admin` repository.
+
+On Debian Systems with Apache User:
+
+.. code-block:: sh
+
+   $ mkdir /var/www/.ssh
+   $ chown -R www-data:nobody /var/www/.ssh
+   $ sudo -u www-data ssh-keygen -t rsa
 
 TODO
-----
+====
 
-* Handle SSH keys
-* Web Frontend
+* Auth Layer with LDAP support
+* Translations
