@@ -147,6 +147,10 @@ Web Interface
 
 * Manage Repositories, Groups and Users
 
+See Screenshots of the web interface on my flickr account:
+
+http://www.flickr.com/photos/muench-worms/sets/72157631918064315/
+
 Installation
 ------------
 
