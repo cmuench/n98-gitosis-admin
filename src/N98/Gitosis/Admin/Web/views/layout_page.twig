@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ app.request.BaseUrl }}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ app.request.BaseUrl }}/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="{{ app.request.BaseUrl }}/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     <title>Gitosis Admin</title>
 </head>
 <body>
@@ -30,5 +30,9 @@
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="{{ app.request.BaseUrl }}/bootstrap/js/bootstrap.min.js"></script>
+
+{% block before_body %}
+{% endblock %}
+
 </body>
 </html>

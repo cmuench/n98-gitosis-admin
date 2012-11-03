@@ -12,7 +12,9 @@
         </div>
     </div>
 
-    <ul id="user_list" class="nav nav-tabs nav-stacked">
+    {% include "_filter_form.twig" %}
+
+    <ul id="user_list" class="nav nav-tabs nav-stacked filter-list">
     {% for user in users %}
         <li>
             <a href="{{ url('user_view', {user:user}) }}"><i class="icon-black icon-user"></i>  {{ user }}
@@ -24,4 +26,8 @@
     {% endfor %}
     </ul>
 
+{% endblock %}
+
+{% block before_body %}
+    {% include "_filter_form_js.twig" %}
 {% endblock %}

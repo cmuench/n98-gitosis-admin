@@ -1,0 +1,16 @@
+<script type="text/javascript">
+
+    jQuery('#repo_filter_form').submit(function () {
+        return false;
+    });
+
+    jQuery('#list_filter').keyup(function () {
+        var filter = jQuery(this).val();
+        if (filter == '') {
+            jQuery('.filter-list').find('li').show();
+        } else {
+            jQuery('.filter-list').find('a:not(' + filter + ')').parent().hide();
+            jQuery('.filter-list').find('a:contains(' + filter + ')').parent().show();
+        }
+    });
+</script>

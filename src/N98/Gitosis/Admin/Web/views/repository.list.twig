@@ -12,12 +12,18 @@
         </div>
     </div>
 
-    <ul id="repo_list" class="nav nav-tabs nav-stacked">
+    {% include "_filter_form.twig" %}
+
+    <ul id="repo_list" class="nav nav-tabs nav-stacked filter-list">
         {% for repo in repositories %}
-        <li>
-            <a href="{{ url('repository_view', { repo: repo.name }) }}"><i class="icon-black icon-book"></i> {{ repo.name }}</a>
-        </li>
+            <li>
+                <a href="{{ url('repository_view', { repo: repo.name }) }}"><i class="icon-black icon-book"></i> {{ repo.name }}</a>
+            </li>
         {% endfor %}
     </ul>
 
+{% endblock %}
+
+{% block before_body %}
+    {% include "_filter_form_js.twig" %}
 {% endblock %}
