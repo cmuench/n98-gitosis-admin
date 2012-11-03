@@ -151,6 +151,9 @@ See Screenshots of the web interface on my flickr account:
 
 http://www.flickr.com/photos/muench-worms/sets/72157631918064315/
 
+.. image:: http://farm9.staticflickr.com/8191/8150656716_76199ea7e5_z.jpg
+  :target: http://www.flickr.com/photos/muench-worms/sets/72157631918064315/
+
 Installation
 ------------
 
