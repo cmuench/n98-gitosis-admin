@@ -30,6 +30,7 @@ namespace N98\Gitosis\Admin\Web;
 
 use Symfony\Component\Translation\Loader\YamlFileLoader as TranslationLoader;
 use Silex\Application as SilexApplication;
+use Silex\ServiceProviderInterface;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;

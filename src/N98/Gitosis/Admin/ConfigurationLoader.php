@@ -33,13 +33,17 @@ use Symfony\Component\Yaml\Yaml;
 class ConfigurationLoader
 {
     /**
+     * @param string $configFile
      * @var array
      */
     protected $configArray;
 
-    public function __construct()
+    public function __construct($configFile)
     {
-        $globalConfig = Yaml::parse(__DIR__ . '/../../../../config.yaml');
+        if (!file_exists($configFile)) {
+            throw new \InvalidArgumentException('Config file does not exit');
+        }
+        $globalConfig = Yaml::parse($configFile);
         $this->configArray = $globalConfig;
     }
 

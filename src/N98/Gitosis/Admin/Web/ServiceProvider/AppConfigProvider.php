@@ -44,7 +44,8 @@ class AppConfigProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $configLoader = new ConfigurationLoader();
+        $configFile = __DIR__ . '/../../../../../../config.yaml';
+        $configLoader = new ConfigurationLoader($configFile);
         $app['config'] = $configLoader;
     }
 

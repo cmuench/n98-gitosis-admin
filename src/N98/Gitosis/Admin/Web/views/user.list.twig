@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <ul class="nav nav-tabs nav-stacked">
+    <ul id="user_list" class="nav nav-tabs nav-stacked">
     {% for user in users %}
         <li>
             <a href="{{ url('user_view', {user:user}) }}"><i class="icon-black icon-user"></i>  {{ user }}

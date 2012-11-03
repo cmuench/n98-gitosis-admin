@@ -1,0 +1,9 @@
+locale: en
+security:
+  authentification:
+    enabled: false
+
+gitosis:
+  root_directory: tests/_files
+  ssh_user: git
+  ssh_host: git.example.com

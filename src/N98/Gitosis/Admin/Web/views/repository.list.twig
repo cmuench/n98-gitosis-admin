@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <ul class="nav nav-tabs nav-stacked">
+    <ul id="repo_list" class="nav nav-tabs nav-stacked">
         {% for repo in repositories %}
         <li>
             <a href="{{ url('repository_view', { repo: repo.name }) }}"><i class="icon-black icon-book"></i> {{ repo.name }}</a>
