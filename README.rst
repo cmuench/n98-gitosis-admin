@@ -162,6 +162,13 @@ On Debian Systems with Apache User:
    $ chown -R www-data:nobody /var/www/.ssh
    $ sudo -u www-data ssh-keygen -t rsa
 
+Requirements
+============
+
+- At least PHP 5.3
+- Composer
+- GIT Client
+
 TODO
 ====
 
