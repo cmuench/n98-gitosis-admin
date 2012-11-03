@@ -173,4 +173,4 @@ TODO
 ====
 
 * Auth Layer with LDAP support
-* Translations
+* More Translations

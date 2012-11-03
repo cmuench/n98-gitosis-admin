@@ -67,7 +67,6 @@ class Application extends SilexApplication
         $this['translator'] = $this->share($this->extend('translator', function($translator) {
             $translator->addLoader('yaml', new TranslationLoader());
 
-            $translator->addResource('yaml', __DIR__ . '/locales/en.yaml', 'en');
             $translator->addResource('yaml', __DIR__ . '/locales/de.yaml', 'de');
 
             return $translator;

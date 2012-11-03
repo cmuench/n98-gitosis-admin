@@ -1,6 +1,45 @@
-Repositories: Repositories
-Create Repository: Repository anlegen
-Name: Name
-Owner: Besitzer
-Gitweb: Gitweb
+Access: Zugriff
+Add Readonly Groups: Neue Readonly Gruppe
+Add Writable Groups: Neue Gruppe mit Schreibzugriff
+Assigned Users: Zugeordnete Benutzer
+Clone Command: Clone Kommando
+Close: Schließen
+create: erstellen
+Create Group: Gruppe erstellen
+Create Repository: Repository erstellen
+Create User: Benutzer erstellen
 Daemon: Dämon
+Delete: Löschen
+Delete Repository: Repository löschen
+Delete User: Benutzer löschen
+Edit: Editieren
+Edit Group: Gruppe editieren
+Edit User: Benutzer editieren
+Gitweb: Gitweb
+Group: Gruppe
+Groups: Gruppen
+Home: Startseite
+Lists all repositories: Liste aller Repositories
+Logout: Abmelden
+Manage SSH Public Key: Öffentliche SSH Schlüssel managen
+No access rules defined: Keine Zugriffsrichtlinie definiert
+No repository assigned: Kein Repository zugewiesen
+No users are currently assigned: Zur Zeit sind keine Benutzer zugeordnet
+Owner: Besitzer
+Password: Passwort
+Persist: Persistieren (Push)
+Public Key is missing: Öffentlicher SSH Schlüssel fehlt
+Readonly Groups: Nurlese-Gruppen
+Readonly Repositories: Nurlese-Repositories
+Readonly Users: Nurlese-Benutzer
+Repositories: Repositories
+Repository: Repository
+Repository Edit: Repository bearbeiten
+Revert: Rückgängig
+save: speichern
+User: Benutzer
+Username: Benutzername
+Users: Benutzer
+Writable Groups: Schreibende Gruppen
+Writable Repositories: Beschreibbare Repositories
+Write Users: Schreib-Benutzer
