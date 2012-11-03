@@ -37,17 +37,64 @@ class GroupProvider implements ControllerProviderInterface
         /**
          * Add users
          */
-        $controllers->get('/{group}/add-user', function(Application $app, $group) {
+        $controllers->match('/{group}/users', function(Application $app, Request $request, $group) {
 
-        })->bind('group_add_user');
+            /* @var $gitosisGroup GitosisGroup */
+            $gitosisGroup = $app['gitosis_config']->getGroup($group);
 
-        /**
-         * Create
-         */
-        $controllers->match('/create', function (Application $app, Request $request) {
+            $data = array(
+                'members' => $gitosisGroup->getMembers(),
+            );
 
-            $data = array();
+            $users = $app['gitosis_config']->getUsers();
+            $choices = array_combine($users, $users);
+            $builder = $app['form.factory']->createBuilder('form', $data)
+                ->add('members', 'choice', array(
+                    'expanded' => true,
+                    'multiple' => true,
+                    'choices'  => $choices,
+                )
+            );
 
+            $form = $builder->getForm();
+
+            if ('POST' == $request->getMethod()) {
+                $form->bind($request);
+
+                if ($form->isValid()) {
+                    try {
+                        $data = $form->getData();
+                        $gitosisGroup->setMembers($data['members']);
+                        $app['gitosis_config']->save();
+
+                        $app['session']->set('flash', array(
+                            'type'    => 'success',
+                            'short'   => 'Saved',
+                            'ext'     => 'Group members was saved',
+                        ));
+                    } catch (\Exception $e) {
+                        $app['session']->set('flash', array(
+                            'type'    => 'error',
+                            'short'   => 'Error',
+                            'ext'     => $e->getMessage(),
+                        ));
+                    }
+
+                    return $app->redirect($app['url_generator']->generate('group_view', array('group' => $group)));
+                }
+            }
+
+            return $app['twig']->render(
+                'group.users.twig',
+                array(
+                    'form'  => $form->createView(),
+                    'group' => $group,
+                )
+            );
+
+        })->bind('group_users');
+
+        $createGroupEditForm = function($data) use ($app) {
             $builder = $app['form.factory']->createBuilder('form', $data)
                 ->add('name', 'text', array(
                     'constraints' => array(
@@ -60,7 +107,7 @@ class GroupProvider implements ControllerProviderInterface
              * Check if group already exists
              */
             $builder->addEventListener(Form\FormEvents::POST_BIND, function(Form\FormEvent $event) use ($app) {
-                $form = $event->getForm();
+                    $form = $event->getForm();
                     try {
                         if ($app['gitosis_config']->getGroup($form['name']->getData())) {
                             $form->addError(new Form\FormError('Group already exists'));
@@ -68,10 +115,19 @@ class GroupProvider implements ControllerProviderInterface
                     } catch (\Exception $e) {
                         // ok
                     }
-            });
+                });
 
 
-            $form = $builder->getForm();
+            return $builder->getForm();
+        };
+
+        /**
+         * Create
+         */
+        $controllers->match('/create', function (Application $app, Request $request) use($createGroupEditForm) {
+
+            $data = array();
+            $form = $createGroupEditForm($data);
 
             if ('POST' == $request->getMethod()) {
                 $form->bind($request);
@@ -107,7 +163,42 @@ class GroupProvider implements ControllerProviderInterface
         /**
          * Edit
          */
-        $controllers->get('/edit/{group}', function (Application $app, $group) {
+        $controllers->match('/edit/{group}', function (Application $app, Request $request, $group) use ($createGroupEditForm) {
+
+            $data = array(
+                'name' => $group
+            );
+            $form = $createGroupEditForm($data);
+
+            if ('POST' == $request->getMethod()) {
+                $form->bind($request);
+
+                if ($form->isValid()) {
+                    $data = $form->getData();
+
+                    try {
+                        $app['gitosis_config']->getGroup($group)->setName($data['name']);
+                        $app['gitosis_config']->save();
+
+                        $app['session']->set('flash', array(
+                                'type'    => 'success',
+                                'short'   => 'Saved',
+                                'ext'     => 'Group was saved.',
+                            ));
+                    } catch (\Exception $e) {
+                        $app['session']->set('flash', array(
+                                'type'    => 'error',
+                                'short'   => 'Could not save group',
+                                'ext'     => $e->getMessage(),
+                            ));
+                    }
+
+                    return $app->redirect($app['url_generator']->generate('group_view', array('group' => $data['name'])));
+                }
+            }
+
+            return $app['twig']->render('group.edit.twig', array('form' => $form->createView(), 'group' => $group));
+
         })->bind('group_edit');
 
         /**

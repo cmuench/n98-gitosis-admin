@@ -1,0 +1,22 @@
+{% extends "layout_page.twig" %}
+{% import "_form_macros.twig" as form_macros %}
+
+{% block content %}
+    <h2>Group Add-User: {{ group }}</h2>
+
+    <form action="#" method="post">
+
+        {{ form_errors(form) }}
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="writable_users">
+                {{ form_macros.checkbox_table(form.members) }}
+                </table>
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
+        <input class="btn btn-primary" type="submit" name="submit" value="save" />
+    </form>
+
+{% endblock %}

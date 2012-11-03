@@ -1,0 +1,10 @@
+{% macro checkbox_table(input) %}
+    <table class="table">
+        {% for checkbox in input %}
+            <tr>
+                <td>{{ form_widget(checkbox) }}</td>
+                <td>{{ form_label(checkbox) }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endmacro %}

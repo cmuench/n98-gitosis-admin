@@ -79,6 +79,17 @@ class Group implements ElementInterface
     }
 
     /**
+     * @param string $name
+     * @return Group
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getName()
