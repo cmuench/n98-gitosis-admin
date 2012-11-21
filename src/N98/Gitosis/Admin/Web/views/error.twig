@@ -1,0 +1,11 @@
+{% extends "layout_page.twig" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12 alert alert-error" style="text-align: center">
+            <p>{{ exception.message }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

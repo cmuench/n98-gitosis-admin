@@ -104,6 +104,13 @@ class Application extends SilexApplication
          */
         $this->register(new SecurityServiceProvider());
         if ($this['config']->isSecurityAuthentificationEnabled()) {
+
+
+            $userConfig = array();
+            foreach ($this['config']->getUsers() as $user) {
+                $userConfig[$user['username']] = array($user['role'], $user['password']);
+            }
+
             $this['security.firewalls'] = array(
                 'login' => array(
                     'pattern' => '^/login$',
@@ -112,11 +119,27 @@ class Application extends SilexApplication
                     'pattern' => '^.*$',
                     'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
                     'logout' => array('logout_path' => '/logout'),
-                    'users' => array(
-                        'admin' => array('ROLE_ADMIN', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg=='),
-                    )
+                    'users' => $userConfig
                 )
             );
+
+            $this['security.role_hierarchy'] = array(
+                'ROLE_ADMIN' => array('ROLE_EDITOR', 'ROLE_READONLY'),
+            );
+
+            $this['security.access_rules'] = array(
+                array('/repository/view/gitosis-admin', 'ROLE_ADMIN'),
+                array('/repository/edit/gitosis-admin', 'ROLE_ADMIN'),
+                array('/repository/delete/gitosis-admin', 'ROLE_ADMIN'),
+                array('/group/view/gitosis-admin', 'ROLE_ADMIN'),
+                array('/group/edit/gitosis-admin', 'ROLE_ADMIN'),
+                array('/group/delete/gitosis-admin', 'ROLE_ADMIN'),
+                array('/user/delete/.*', 'ROLE_ADMIN'),
+                array('/user/create/.*', 'ROLE_ADMIN'),
+                array('/user/edit/.*', 'ROLE_ADMIN'),
+                array('^.*$', 'ROLE_EDITOR'),
+            );
+
         } else {
             // No auth
             $this['security.firewalls'] = array(
@@ -153,7 +176,6 @@ class Application extends SilexApplication
          */
         $this->register(new FlashMessageProvider());
 
-
         /**
          * Register controllers
          */
@@ -162,5 +184,11 @@ class Application extends SilexApplication
         $this->mount('/group', new GroupProvider());
         $this->mount('/user', new UserProvider());
         $this->mount('/gitosis', new GitosisProvider());
+
+        $this->error(function($e) {
+            return $this['twig']->render('error.twig', array(
+                'exception' => $e
+            ));
+        });
     }
 }

@@ -7,3 +7,12 @@ gitosis:
   root_directory: /path/to/gitosis-admin
   ssh_user: git
   ssh_host: myhost
+
+users:
+  - username: admin
+    password: 5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==
+    role: ROLE_ADMIN
+
+  - username: foo
+    password: 5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==
+    role: ROLE_EDITOR

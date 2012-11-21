@@ -90,6 +90,14 @@ class ConfigurationLoader
     /**
      * @return array
      */
+    public function getUsers()
+    {
+        return $this->configArray['users'];
+    }
+
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return $this->configArray;
