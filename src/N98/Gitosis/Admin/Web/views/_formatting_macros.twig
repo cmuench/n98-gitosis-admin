@@ -1,0 +1,3 @@
+{% macro username(username) %}
+    <span class="{% if username|slice(0, 4) == 'root' %}label label-important{% endif %}">{{ username }}</span>
+{% endmacro %}

@@ -1,4 +1,5 @@
 {% extends "layout_page.twig" %}
+{% import "_formatting_macros.twig" as format_macros %}
 
 {% block content %}
     <h2>{{ 'Repository'|trans }}: {{ repository.name }}</h2>
@@ -52,14 +53,14 @@
             {% if users_write %}
                 <li class="nav-header">{{ 'Write Users'|trans }}</li>
                 {% for user in users_write %}
-                <li><a href="{{ url('user_view', {user:user}) }}"><i class="icon-user"></i> {{ user }}</a></li>
+                <li><a href="{{ url('user_view', {user:user}) }}"><i class="icon-user"></i> {{ format_macros.username(user) }}</a></li>
                 {% endfor %}
             {% endif %}
 
             {% if users_readonly %}
                 <li class="nav-header">{{ 'Readonly Users'|trans }}</li>
                 {% for user in users_readonly %}
-                <li><a href="#"><i class="icon-user"></i> {{ user }}</a></li>
+                <li><a href="#"><i class="icon-user"></i> {{ format_macros.username(user) }}</a></li>
                 {% endfor %}
             {% endif %}
         </ul>

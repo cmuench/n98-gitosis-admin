@@ -1,4 +1,5 @@
 {% extends "layout_page.twig" %}
+{% import "_formatting_macros.twig" as format_macros %}
 
 {% block content %}
     <h2>{{ 'Group'|trans }}: {{ group.name }}</h2>
@@ -58,7 +59,7 @@
     <ul class="nav nav-tabs nav-stacked">
         {% for user in group.members %}
             <li>
-                <a href="{{ url('user_view', {user:user}) }}"><i class="icon-black icon-user"></i>  {{ user }}</a>
+                <a href="{{ url('user_view', {user:user}) }}"><i class="icon-black icon-user"></i>  {{ format_macros.username(user) }}</a>
             </li>
         {% else %}
             <span class="label info">No user assigned</span>
