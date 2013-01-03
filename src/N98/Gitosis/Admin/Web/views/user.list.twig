@@ -17,11 +17,15 @@
     <ul id="user_list" class="nav nav-tabs nav-stacked filter-list">
     {% for user in users %}
         <li>
-            <a href="{{ url('user_view', {user:user}) }}"><i class="icon-black icon-user"></i>  {{ user }}
+            <a href="{{ url('user_view', {user:user}) }}">
+                <i class="icon-black icon-user"></i>
+                <span class="{% if user|slice(0, 4) == 'root' %}label label-important{% endif %}">{{ user }}</span>
                 {% if user not in ssh_key_exists %}
-                    <span class="label label-important">{{ 'Public Key is missing'|trans }}</span>
+                    <span class="label label-important">
+                        {{ 'Public Key is missing'|trans }}
+                    </span>
                 {% endif %}
-            </a
+            </a>
         </li>
     {% endfor %}
     </ul>
