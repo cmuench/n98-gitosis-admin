@@ -490,11 +490,19 @@ class Config
     }
 
     /**
+     * @reeturn GitClient
+     */
+    public function getGitClient()
+    {
+        return new GitClient();
+    }
+
+    /**
      * @return \Gitter\Repository
      */
     public function getGitRepository()
     {
-        $client = new GitClient();
+        $client = $this->getGitClient();
         $repository = $client->getRepository($this->getGitosisRoot());
 
         return $repository;
@@ -541,7 +549,7 @@ class Config
      */
     public function revert()
     {
-        $this->getGitRepository()->checkout('master');
+        $this->getGitClient()->run($this->getGitRepository(), 'reset --hard');
     }
 
 }
