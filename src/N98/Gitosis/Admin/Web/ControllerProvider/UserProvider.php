@@ -31,6 +31,7 @@ namespace N98\Gitosis\Admin\Web\ControllerProvider;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form;
 
@@ -166,10 +167,10 @@ class UserProvider implements ControllerProviderInterface
          */
         $controllers->match('/delete/{user}', function(Application $app, $user) {
 
-                $app['gitosis_config']->removeUser($user)->save();
+            $app['gitosis_config']->removeUser($user)->save();
 
-                return $app->redirect($app['url_generator']->generate('user_list'));
-            })->bind('user_delete');
+            return $app->redirect($app['url_generator']->generate('user_list'));
+        })->bind('user_delete');
 
         return $controllers;
     }
