@@ -75,9 +75,10 @@ class InterfaceTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isOk());
         $this->assertCount(1, $crawler->filter('form'));
         $this->assertEquals('form[name]', $crawler->filter('form input')->eq(0)->attr('name'));
-        $this->assertEquals('form[owner]', $crawler->filter('form input')->eq(1)->attr('name'));
-        $this->assertEquals('form[gitweb]', $crawler->filter('form input')->eq(2)->attr('name'));
-        $this->assertEquals('form[daemon]', $crawler->filter('form input')->eq(3)->attr('name'));
+        $this->assertEquals('form[description]', $crawler->filter('form input')->eq(1)->attr('name'));
+        $this->assertEquals('form[owner]', $crawler->filter('form input')->eq(2)->attr('name'));
+        $this->assertEquals('form[gitweb]', $crawler->filter('form input')->eq(3)->attr('name'));
+        $this->assertEquals('form[daemon]', $crawler->filter('form input')->eq(4)->attr('name'));
     }
 
     /**
