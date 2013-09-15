@@ -10,6 +10,9 @@ gitosis:
 
 #repository:
 #  list:
+#    blacklist:
+#      - repo1
+#      - repo2
 #    filters:
 #      - "Magento": magento
 #      - "TYPO3": typo3

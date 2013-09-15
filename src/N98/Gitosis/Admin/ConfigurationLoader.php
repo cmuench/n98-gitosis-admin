@@ -110,6 +110,18 @@ class ConfigurationLoader
     /**
      * @return array
      */
+    public function getRepositoryBlacklist()
+    {
+        if (!isset($this->configArray['repository']['list']['blacklist'])) {
+            return array();
+        }
+
+        return $this->configArray['repository']['list']['blacklist'];
+    }
+
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return $this->configArray;

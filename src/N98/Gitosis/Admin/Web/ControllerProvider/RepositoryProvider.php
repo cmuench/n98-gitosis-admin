@@ -29,6 +29,7 @@
 namespace N98\Gitosis\Admin\Web\ControllerProvider;
 
 use N98\Gitosis\Config\Repository as GitosisRepository;
+use N98\Gitosis\Config\Repository;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -36,6 +37,27 @@ use Silex\ControllerProviderInterface;
 
 class RepositoryProvider implements ControllerProviderInterface
 {
+    /**
+     * @param Application $app
+     *
+     * @return array
+     */
+    protected function _getRepositories(Application $app)
+    {
+        $repositories = $app['gitosis_config']->getRepositories();
+        $blacklist = $app['config']->getRepositoryBlacklist();
+        $repositories = array_filter(
+            $repositories, function (Repository $repository) use ($blacklist) {
+                if (!in_array($repository->getName(), $blacklist)) {
+                    return $repository;
+                }
+
+                return false;
+            }
+        );
+        return $repositories;
+    }
+
     public function connect(Application $app)
     {
         // creates a new controller based on the default route
@@ -45,8 +67,10 @@ class RepositoryProvider implements ControllerProviderInterface
          * Index
          */
         $controllers->get('/', function (Application $app) {
+            $repositories = $this->_getRepositories($app);
+
             return $app['twig']->render('repository.list.twig', array(
-                'repositories' => $app['gitosis_config']->getRepositories(),
+                'repositories' => $repositories,
                 'filters'      => $app['config']->getRepositoryListFilters(),
             ));
         })->bind('repository_list');
@@ -121,6 +145,10 @@ class RepositoryProvider implements ControllerProviderInterface
          * Edit
          */
         $controllers->match('/edit/{repo}', function(Application $app, Request $request, $repo) {
+            $repositories = $this->_getRepositories($app);
+            if (!in_array($repo, $repositories)) {
+                return;
+            }
 
             $repository = $app['gitosis_config']->getRepository($repo);
             $data = array(
@@ -174,6 +202,11 @@ class RepositoryProvider implements ControllerProviderInterface
          * View
          */
         $controllers->match('/view/{repo}', function(Application $app, $repo) {
+            $repositories = $this->_getRepositories($app);
+            if (!in_array($repo, $repositories)) {
+                return;
+            }
+
             // display the form
             return $app['twig']->render(
                 'repository.view.twig',
@@ -192,6 +225,10 @@ class RepositoryProvider implements ControllerProviderInterface
          * Delete
          */
         $controllers->match('/delete/{repo}', function(Application $app, $repo) {
+            $repositories = $this->_getRepositories($app);
+            if (!in_array($repo, $repositories)) {
+                return;
+            }
 
             $app['gitosis_config']->removeRepository($repo)->save();
 
