@@ -62,13 +62,12 @@ class RepositoryProvider implements ControllerProviderInterface
     {
         // creates a new controller based on the default route
         $controllers = $app['controllers_factory'];
+        $repositories = $this->_getRepositories($app);
 
         /**
          * Index
          */
-        $controllers->get('/', function (Application $app) {
-            $repositories = $this->_getRepositories($app);
-
+        $controllers->get('/', function (Application $app) use ($repositories) {
             return $app['twig']->render('repository.list.twig', array(
                 'repositories' => $repositories,
                 'filters'      => $app['config']->getRepositoryListFilters(),
@@ -144,8 +143,7 @@ class RepositoryProvider implements ControllerProviderInterface
         /**
          * Edit
          */
-        $controllers->match('/edit/{repo}', function(Application $app, Request $request, $repo) {
-            $repositories = $this->_getRepositories($app);
+        $controllers->match('/edit/{repo}', function(Application $app, Request $request, $repo) use ($repositories) {
             if (!in_array($repo, $repositories)) {
                 return;
             }
@@ -201,8 +199,7 @@ class RepositoryProvider implements ControllerProviderInterface
         /**
          * View
          */
-        $controllers->match('/view/{repo}', function(Application $app, $repo) {
-            $repositories = $this->_getRepositories($app);
+        $controllers->match('/view/{repo}', function(Application $app, $repo) use ($repositories) {
             if (!in_array($repo, $repositories)) {
                 return;
             }
