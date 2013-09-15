@@ -98,6 +98,18 @@ class ConfigurationLoader
     /**
      * @return array
      */
+    public function getRepositoryListFilters()
+    {
+        if (!isset($this->configArray['repository']['list']['filters'])) {
+            return array();
+        }
+
+        return $this->configArray['repository']['list']['filters'];
+    }
+
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return $this->configArray;

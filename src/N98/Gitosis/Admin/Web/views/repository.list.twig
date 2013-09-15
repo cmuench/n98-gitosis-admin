@@ -1,4 +1,5 @@
 {% extends "layout_page.twig" %}
+{% import "_filter_macros.twig" as filter %}
 
 {% block content %}
     <h2>{{ 'Repositories'|trans }}</h2>
@@ -13,11 +14,14 @@
     </div>
 
     {% include "_filter_form.twig" %}
+    {{ filter.render_filters(filters) }}
 
     <ul id="repo_list" class="nav nav-tabs nav-stacked filter-list">
         {% for repo in repositories %}
             <li>
-                <a href="{{ url('repository_view', { repo: repo.name }) }}"><i class="icon-black icon-book"></i> {{ repo.name }}</a>
+                <a href="{{ url('repository_view', { repo: repo.name }) }}" title="{{ repo.description }}"><i class="icon-black icon-book"></i>
+                    <span>{{ repo.name }}</span>
+                </a>
             </li>
         {% endfor %}
     </ul>

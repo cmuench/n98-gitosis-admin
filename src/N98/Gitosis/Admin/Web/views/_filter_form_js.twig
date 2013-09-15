@@ -1,16 +1,25 @@
 <script type="text/javascript">
 
-    jQuery('#repo_filter_form').submit(function () {
-        return false;
-    });
-
-    jQuery('#list_filter').keyup(function () {
-        var filter = jQuery(this).val();
+    var doFilter = function(filter) {
         if (filter == '') {
             jQuery('.filter-list').find('li').show();
         } else {
             jQuery('.filter-list').find('a:not(' + filter + ')').parent().hide();
             jQuery('.filter-list').find('a:contains(' + filter + ')').parent().show();
         }
+    };
+
+    jQuery('#repo_filter_form').submit(function () {
+        return false;
+    });
+
+    jQuery('#list_filter').keyup(function() {
+        doFilter(jQuery(this).val());
+    });
+
+    jQuery('#filter_nav li a').click(function() {
+        var filter = jQuery(this).attr('rel');
+        jQuery('#list_filter').val(filter);
+        doFilter(filter);
     });
 </script>

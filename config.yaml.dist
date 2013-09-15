@@ -8,6 +8,12 @@ gitosis:
   ssh_user: git
   ssh_host: myhost
 
+#repository:
+#  list:
+#    filters:
+#      - "Magento": magento
+#      - "TYPO3": typo3
+
 users:
   - username: admin
     password: 5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==

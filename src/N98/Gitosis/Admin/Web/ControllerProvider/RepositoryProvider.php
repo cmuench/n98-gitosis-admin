@@ -46,7 +46,8 @@ class RepositoryProvider implements ControllerProviderInterface
          */
         $controllers->get('/', function (Application $app) {
             return $app['twig']->render('repository.list.twig', array(
-                'repositories' => $app['gitosis_config']->getRepositories()
+                'repositories' => $app['gitosis_config']->getRepositories(),
+                'filters'      => $app['config']->getRepositoryListFilters(),
             ));
         })->bind('repository_list');
 
@@ -68,6 +69,11 @@ class RepositoryProvider implements ControllerProviderInterface
                         new Assert\NotBlank()
                     )
                 ))
+                ->add('description', 'text', array(
+                    'trim' => true,
+                    'constraints' => array(
+                    )
+                ))
                 ->add('gitweb', 'checkbox', array(
                     'required' => false
                 ))
@@ -85,6 +91,7 @@ class RepositoryProvider implements ControllerProviderInterface
                     try {
                         $repository = new GitosisRepository($data['name']);
                         $repository->setOwner($data['owner']);
+                        $repository->setDescription($data['description']);
                         $repository->setDaemon($data['daemon']);
                         $repository->setGitweb($data['gitweb']);
                         $app['gitosis_config']->addRepository($repository)->save();
@@ -117,15 +124,21 @@ class RepositoryProvider implements ControllerProviderInterface
 
             $repository = $app['gitosis_config']->getRepository($repo);
             $data = array(
-                'owner' => $repository->getOwner(),
-                'daemon' => $repository->getDaemon(),
-                'gitweb' => $repository->getGitweb(),
+                'owner'       => $repository->getOwner(),
+                'description' => $repository->getDescription(),
+                'daemon'      => $repository->getDaemon(),
+                'gitweb'      => $repository->getGitweb(),
             );
 
             $form = $app['form.factory']->createBuilder('form', $data)
                 ->add('owner', 'text', array(
                     'constraints' => array(
                         new Assert\NotBlank()
+                    )
+                ))
+                ->add('description', 'text', array(
+                    'trim' => true,
+                    'constraints' => array(
                     )
                 ))
                 ->add('gitweb', 'checkbox', array(
@@ -145,6 +158,7 @@ class RepositoryProvider implements ControllerProviderInterface
                     $repository->setOwner($data['owner']);
                     $repository->setDaemon($data['daemon']);
                     $repository->setGitweb($data['gitweb']);
+                    $repository->setDescription($data['description']);
                     $app['gitosis_config']->save();
 
                     return $app->redirect($app['url_generator']->generate('repository_list'));
@@ -160,10 +174,6 @@ class RepositoryProvider implements ControllerProviderInterface
          * View
          */
         $controllers->match('/view/{repo}', function(Application $app, $repo) {
-
-            $data = array(
-            );
-
             // display the form
             return $app['twig']->render(
                 'repository.view.twig',

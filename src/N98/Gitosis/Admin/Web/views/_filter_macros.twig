@@ -1,0 +1,20 @@
+{% macro render_filter_item(filter) %}
+    {% for name, value in filter %}
+        <li>
+            <a rel="{{ value }}">
+                <i class="icon-filter"></i>
+                {{ name }}
+            </a>
+        </li>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_filters(filters) %}
+    {% import _self as self %}
+
+    <ul id="filter_nav" class="nav nav-tabs">
+    {% for filter in filters %}
+        {{ self.render_filter_item(filter) }}
+    {% endfor %}
+    </ul>
+{% endmacro %}
