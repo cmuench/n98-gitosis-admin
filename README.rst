@@ -6,6 +6,12 @@ Manage gitosis over CLI- and Web-Interface.
 .. image:: https://secure.travis-ci.org/cmuench/n98-gitosis-admin.png
   :target: https://secure.travis-ci.org/cmuench/n98-gitosis-admin
 
+.. image:: https://www.versioneye.com/user/projects/514c647f9ee00e0002007ec9/badge.png
+  :target: https://www.versioneye.com/user/projects/514c647f9ee00e0002007ec9
+
+.. image:: https://poser.pugx.org/n98/gitosis-admin/v/stable.png
+  :target: https://packagist.org/packages/n98/gitosis-admin
+
 Installation
 ------------
 
