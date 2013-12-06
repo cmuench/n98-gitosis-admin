@@ -221,8 +221,7 @@ class RepositoryProvider implements ControllerProviderInterface
         /**
          * Delete
          */
-        $controllers->match('/delete/{repo}', function(Application $app, $repo) {
-            $repositories = $this->_getRepositories($app);
+        $controllers->match('/delete/{repo}', function(Application $app, $repo) use ($repositories) {
             if (!in_array($repo, $repositories)) {
                 return;
             }
